@@ -99,6 +99,7 @@ export const useCALDictionaryStore = create<CALDictionaryStore>()((set, get) => 
     }
 
     const normalized = normalizeSearchTerm(term);
+    const { syriacOnly } = get();
     const isScript = isSyriacScript(term) || isHebrewScript(term);
     const isEnglish = /^[a-z\s]+$/i.test(term.trim()) && !normalized.includes('(') && !normalized.includes(')');
 
@@ -108,9 +109,8 @@ export const useCALDictionaryStore = create<CALDictionaryStore>()((set, get) => 
     for (const entry of index) {
       if (results.length >= limit) break;
 
-      // Syriac-only filter: check if any meaning has dialect "60" or "65"
-      // We can't check meanings from the index, so we skip this filter here
-      // and rely on the entry-level dialect check in the UI
+      // Syriac-only filter: skip entries with no Syriac dialect meanings
+      if (syriacOnly && !entry.y) continue;
 
       let match = false;
 

@@ -75,6 +75,7 @@ export interface CALIndexEntry {
   p: string;  // POS
   g: string;  // English gloss
   f: string;  // File key for lazy loading
+  y: number;  // 1 if any meaning has Syriac dialect (60/65)
 }
 
 export interface CALDialect {

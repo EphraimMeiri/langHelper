@@ -212,6 +212,11 @@ for (const file of jsonFiles) {
 
     enrichedEntries.push(enriched);
 
+    // Check if any meaning has a Syriac dialect (codes 60 or 65)
+    const hasSyriac = (entry.meanings || []).some(m =>
+      (m.dialect_codes || []).some(c => c === '60' || c === '65')
+    );
+
     // Build search index entry
     searchIndex.push({
       l: lemma,                             // CAL lemma
@@ -220,6 +225,7 @@ for (const file of jsonFiles) {
       p: entry.pos || '',                   // POS
       g: entry.primary_gloss || '',         // English gloss
       f: fileKey,                           // File key for lazy loading
+      y: hasSyriac ? 1 : 0,                // 1 if any meaning has Syriac dialect
     });
 
     totalEntries++;

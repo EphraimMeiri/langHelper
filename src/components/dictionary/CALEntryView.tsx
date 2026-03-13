@@ -211,7 +211,7 @@ function RelatedSection({ related }: { related: string[] }) {
 }
 
 export function CALEntryView() {
-  const { selectedEntry, isLoading, clearSelection } = useCALDictionaryStore();
+  const { selectedEntry, isLoading, clearSelection, syriacOnly } = useCALDictionaryStore();
 
   if (isLoading) {
     return (
@@ -291,14 +291,21 @@ export function CALEntryView() {
         </div>
       )}
 
-      {/* Meanings */}
-      {entry.meanings.length > 0 && (
-        <div className="divide-y divide-gray-100 dark:divide-gray-700">
-          {entry.meanings.map((m) => (
-            <MeaningBlock key={m.gloss_id} meaning={m} />
-          ))}
-        </div>
-      )}
+      {/* Meanings — filter to Syriac dialects when syriacOnly is on */}
+      {(() => {
+        const meanings = syriacOnly
+          ? entry.meanings.filter((m) =>
+              m.dialect_codes.some((c) => c === '60' || c === '65')
+            )
+          : entry.meanings;
+        return meanings.length > 0 ? (
+          <div className="divide-y divide-gray-100 dark:divide-gray-700">
+            {meanings.map((m) => (
+              <MeaningBlock key={m.gloss_id} meaning={m} />
+            ))}
+          </div>
+        ) : null;
+      })()}
 
       {/* End notes */}
       {entry.end_notes && (
