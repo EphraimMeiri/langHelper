@@ -1,0 +1,31 @@
+{
+  "id": "syriac",
+  "name": "Syriac",
+  "nativeName": "ܣܘܪܝܝܐ",
+  "direction": "rtl",
+  "script": "syriac",
+  "alphabet": [
+    "ܐ", "ܒ", "ܓ", "ܕ", "ܗ", "ܘ", "ܙ", "ܚ", "ܛ", "ܝ",
+    "ܟ", "ܠ", "ܡ", "ܢ", "ܣ", "ܥ", "ܦ", "ܨ", "ܩ", "ܪ",
+    "ܫ", "ܬ"
+  ],
+  "grammaticalCategories": {
+    "person": ["1st", "2nd", "3rd"],
+    "number": ["singular", "plural"],
+    "gender": ["masculine", "feminine"],
+    "tense": ["past", "future", "imperative", "infinitive", "active-participle", "passive-participle"],
+    "stems": ["peal", "pael", "aphel", "ethpeel", "ethpaal", "ettaphal"]
+  },
+  "verbClasses": [
+    "strong",
+    "pe-nun",
+    "pe-alef",
+    "pe-yod",
+    "pe-waw",
+    "ayin-waw",
+    "ayin-yod",
+    "ayin-ayin",
+    "lamed-yod",
+    "lamed-alef"
+  ]
+}

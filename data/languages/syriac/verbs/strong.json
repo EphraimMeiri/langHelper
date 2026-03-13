@@ -1,0 +1,62 @@
+{
+  "id": "syriac-strong",
+  "languageId": "syriac",
+  "class": "strong",
+  "classDisplayName": "Strong Verbs (שלמים)",
+  "paradigmRoot": "ܩܛܠ",
+  "rootMeaning": "to kill",
+  "stems": {
+    "peal": {
+      "past": {
+        "3ms": { "form": "ܩܛܰܠ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛܰ", "type": "root"}, {"text": "ܠ", "type": "root"}] },
+        "3fs": { "form": "ܩܶܛܠܰܬ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܛ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܰܬ", "type": "suffix"}] },
+        "2ms": { "form": "ܩܛܰܠܬ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛܰ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܬ", "type": "suffix"}] },
+        "2fs": { "form": "ܩܛܰܠܬܝ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛܰ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܬܝ", "type": "suffix"}] },
+        "1ms": { "form": "ܩܶܛܠܶܬ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܛ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܶܬ", "type": "suffix"}] },
+        "1fs": { "form": "ܩܶܛܠܶܬ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܛ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܶܬ", "type": "suffix"}] },
+        "3mp": { "form": "ܩܛܰܠܘ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛܰ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܘ", "type": "suffix"}] },
+        "3fp": { "form": "ܩܛܰܠ̈ܝ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛܰ", "type": "root"}, {"text": "ܠ̈", "type": "root"}, {"text": "ܝ", "type": "suffix"}] },
+        "2mp": { "form": "ܩܛܰܠܬܘܢ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛܰ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܬܘܢ", "type": "suffix"}] },
+        "2fp": { "form": "ܩܛܰܠܬܶܝܢ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛܰ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܬܶܝܢ", "type": "suffix"}] },
+        "1cp": { "form": "ܩܛܰܠܢ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛܰ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܢ", "type": "suffix"}] }
+      },
+      "future": {
+        "3ms": { "form": "ܢܶܩܛܽܘܠ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "3fs": { "form": "ܬܶܩܛܽܘܠ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "2ms": { "form": "ܬܶܩܛܽܘܠ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "2fs": { "form": "ܬܶܩܛܠܺܝܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܺܝܢ", "type": "suffix"}] },
+        "1ms": { "form": "ܐܶܩܛܽܘܠ", "segments": [{"text": "ܐ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "1fs": { "form": "ܐܶܩܛܽܘܠ", "segments": [{"text": "ܐ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "3mp": { "form": "ܢܶܩܛܠܽܘܢ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܽܘܢ", "type": "suffix"}] },
+        "3fp": { "form": "ܢܶܩ̈ܛܠܳܢ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܩ̈", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] },
+        "2mp": { "form": "ܬܶܩܛܠܽܘܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܽܘܢ", "type": "suffix"}] },
+        "2fp": { "form": "ܬܶܩ̈ܛܠܳܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܩ̈", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] },
+        "1cp": { "form": "ܢܶܩܛܽܘܠ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] }
+      },
+      "imperative": {
+        "2ms": { "form": "ܩܛܽܘܠ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "2fs": { "form": "ܩܛܽܘܠܝ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܝ", "type": "suffix"}] },
+        "2mp": { "form": "ܩܛܽܘܠܘ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܘ", "type": "suffix"}] },
+        "2fp": { "form": "ܩܛܽܘ̈ܠܝ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܽܘ̈", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܝ", "type": "suffix"}] }
+      },
+      "infinitive": {
+        "abs": { "form": "ܡܶܩܛܰܠ", "segments": [{"text": "ܡ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܛܰ", "type": "root"}, {"text": "ܠ", "type": "root"}] }
+      },
+      "active-participle": {
+        "ms": { "form": "ܩܳܛܶܠ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܛ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "fs": { "form": "ܩܳܛܠܳܐ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܛ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܐ", "type": "suffix"}] },
+        "mp": { "form": "ܩܳܛܠܺܝܢ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܛ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܺܝܢ", "type": "suffix"}] },
+        "fp": { "form": "ܩܳ̈ܛܠܳܢ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ̈", "type": "vowel"}, {"text": "ܛ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] }
+      },
+      "passive-participle": {
+        "ms": { "form": "ܩܛܺܝܠ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܺܝ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "fs": { "form": "ܩܛܺܝܠܳܐ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܺܝ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܐ", "type": "suffix"}] },
+        "mp": { "form": "ܩܛܺܝܠܺܝܢ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܺܝ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܺܝܢ", "type": "suffix"}] },
+        "fp": { "form": "ܩܛܺܝ̈ܠܳܢ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܛ", "type": "root"}, {"text": "ܺܝ̈", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] }
+      }
+    }
+  },
+  "notes": "Strong verbs (גזרת השלמים) - the paradigm verb ܩܛܠ (to kill)",
+  "createdAt": "2024-01-13T00:00:00.000Z",
+  "updatedAt": "2024-01-13T00:00:00.000Z"
+}

@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+/* Syriac Fonts - Meltho */
+@font-face {
+  font-family: 'Estrangelo Edessa';
+  src: url('/fonts/melthofonts-1/melthofonts-1.21/SyrCOMEdessa.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Serto Jerusalem';
+  src: url('/fonts/melthofonts-1/melthofonts-1.21/SyrCOMJerusalem.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Serto Jerusalem';
+  src: url('/fonts/melthofonts-1/melthofonts-1.21/SyrCOMJerusalemBold.otf') format('opentype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'East Syriac Adiabene';
+  src: url('/fonts/melthofonts-1/melthofonts-1.21/SyrCOMAdiabene.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Additional Syriac fonts */
+@font-face {
+  font-family: 'Syriac Antioch';
+  src: url('/fonts/melthofonts-1/melthofonts-1.21/SyrCOMAntioch.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Syriac Nisibin';
+  src: url('/fonts/melthofonts-1/melthofonts-1.21/SyrCOMNisibin.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Fallback - Noto Sans Syriac from Google Fonts */
+@font-face {
+  font-family: 'Noto Sans Syriac';
+  src: url('https://fonts.gstatic.com/s/notosanssyriac/v16/Ktk7AKuMeZjqPnXgyqribqzQqgW0LYiVqV7dXcP0C-VD9MaJyZfUL_FC.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Hebrew Fonts */
+@font-face {
+  font-family: 'Noto Sans Hebrew';
+  src: url('https://fonts.gstatic.com/s/notosanshebrew/v46/or3HQ7v33eiDljA1IufXTtVf7V6RvEEdhQlk0LlGxCyaeNKYZC0sqk3xXGiXd4qtqYmP.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Frank Ruehl CLM';
+  src: url('https://fonts.gstatic.com/s/frankruhllibre/v20/j8_96_fAw7jrcalD7oKYNX0QfAnPUxvHxJDMhYeIHw8.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --font-syriac: 'Estrangelo Edessa', 'Noto Sans Syriac', serif;
+  --font-syriac-estrangela: 'Estrangelo Edessa', 'Noto Sans Syriac', serif;
+  --font-syriac-serto: 'Serto Jerusalem', 'Noto Sans Syriac', serif;
+  --font-syriac-east: 'East Syriac Adiabene', 'Noto Sans Syriac', serif;
+  --font-hebrew: 'Noto Sans Hebrew', 'David', serif;
+}
+
+body {
+  @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* Syriac font classes */
+.font-syriac {
+  font-family: var(--font-syriac);
+  line-height: 1.8;
+}
+
+.font-syriac-estrangela {
+  font-family: var(--font-syriac-estrangela);
+  line-height: 1.8;
+}
+
+.font-syriac-serto {
+  font-family: var(--font-syriac-serto);
+  line-height: 1.8;
+}
+
+.font-syriac-east {
+  font-family: var(--font-syriac-east);
+  line-height: 1.8;
+}
+
+/* Hebrew font classes */
+.font-hebrew {
+  font-family: var(--font-hebrew);
+}
+
+.font-hebrew-noto {
+  font-family: 'Noto Sans Hebrew', serif;
+}
+
+.font-hebrew-frank {
+  font-family: 'Frank Ruehl CLM', 'Frank Ruehl', serif;
+}
+
+.font-hebrew-david {
+  font-family: 'David CLM', 'David', serif;
+}
+
+/* Highlighting for parsing steps */
+.highlight-segment {
+  @apply bg-yellow-200 dark:bg-yellow-700 rounded px-0.5 transition-all duration-300;
+}
+
+.highlight-root {
+  @apply bg-blue-200 dark:bg-blue-700 rounded px-0.5;
+}
+
+.highlight-affix {
+  @apply bg-green-200 dark:bg-green-700 rounded px-0.5;
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+  @apply rounded border-gray-300 text-blue-600 focus:ring-blue-500;
+}
+
+input[type="radio"] {
+  @apply border-gray-300 text-blue-600 focus:ring-blue-500;
+}

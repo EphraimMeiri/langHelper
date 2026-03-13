@@ -1,0 +1,62 @@
+{
+  "id": "syriac-ayin-waw",
+  "languageId": "syriac",
+  "class": "ayin-waw",
+  "classDisplayName": "Ayin-Waw Verbs / Hollow (ע״ו)",
+  "paradigmRoot": "ܩܡ",
+  "rootMeaning": "to stand, arise",
+  "stems": {
+    "peal": {
+      "past": {
+        "3ms": { "form": "ܩܳܡ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܡ", "type": "root"}] },
+        "3fs": { "form": "ܩܳܡܰܬ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܰܬ", "type": "suffix"}] },
+        "2ms": { "form": "ܩܳܡܬ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܬ", "type": "suffix"}] },
+        "2fs": { "form": "ܩܳܡܬܝ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܬܝ", "type": "suffix"}] },
+        "1ms": { "form": "ܩܳܡܶܬ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܶܬ", "type": "suffix"}] },
+        "1fs": { "form": "ܩܳܡܶܬ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܶܬ", "type": "suffix"}] },
+        "3mp": { "form": "ܩܳܡܘ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܘ", "type": "suffix"}] },
+        "3fp": { "form": "ܩܳ̈ܡܝ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ̈", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܝ", "type": "suffix"}] },
+        "2mp": { "form": "ܩܳܡܬܘܢ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܬܘܢ", "type": "suffix"}] },
+        "2fp": { "form": "ܩܳܡܬܶܝܢ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܬܶܝܢ", "type": "suffix"}] },
+        "1cp": { "form": "ܩܳܡܢ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܢ", "type": "suffix"}] }
+      },
+      "future": {
+        "3ms": { "form": "ܢܩܽܘܡ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܩ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܡ", "type": "root"}] },
+        "3fs": { "form": "ܬܩܽܘܡ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܩ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܡ", "type": "root"}] },
+        "2ms": { "form": "ܬܩܽܘܡ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܩ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܡ", "type": "root"}] },
+        "2fs": { "form": "ܬܩܽܘܡܺܝܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܩ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܺܝܢ", "type": "suffix"}] },
+        "1ms": { "form": "ܐܩܽܘܡ", "segments": [{"text": "ܐ", "type": "prefix"}, {"text": "ܩ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܡ", "type": "root"}] },
+        "1fs": { "form": "ܐܩܽܘܡ", "segments": [{"text": "ܐ", "type": "prefix"}, {"text": "ܩ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܡ", "type": "root"}] },
+        "3mp": { "form": "ܢܩܽܘܡܽܘܢ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܩ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܽܘܢ", "type": "suffix"}] },
+        "3fp": { "form": "ܢܩܽܘ̈ܡܳܢ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܩ", "type": "root"}, {"text": "ܽܘ̈", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] },
+        "2mp": { "form": "ܬܩܽܘܡܽܘܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܩ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܽܘܢ", "type": "suffix"}] },
+        "2fp": { "form": "ܬܩܽܘ̈ܡܳܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܩ", "type": "root"}, {"text": "ܽܘ̈", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] },
+        "1cp": { "form": "ܢܩܽܘܡ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܩ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܡ", "type": "root"}] }
+      },
+      "imperative": {
+        "2ms": { "form": "ܩܽܘܡ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܡ", "type": "root"}] },
+        "2fs": { "form": "ܩܽܘܡܝ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܝ", "type": "suffix"}] },
+        "2mp": { "form": "ܩܽܘܡܘ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܘ", "type": "suffix"}] },
+        "2fp": { "form": "ܩܽܘ̈ܡܝ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܽܘ̈", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܝ", "type": "suffix"}] }
+      },
+      "infinitive": {
+        "abs": { "form": "ܡܩܳܡ", "segments": [{"text": "ܡ", "type": "prefix"}, {"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܡ", "type": "root"}] }
+      },
+      "active-participle": {
+        "ms": { "form": "ܩܳܐܶܡ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܐ", "type": "vowel"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܡ", "type": "root"}] },
+        "fs": { "form": "ܩܳܝܡܳܐ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܝ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܳܐ", "type": "suffix"}] },
+        "mp": { "form": "ܩܳܝܡܺܝܢ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܝ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܺܝܢ", "type": "suffix"}] },
+        "fp": { "form": "ܩܳ̈ܝܡܳܢ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܳ̈", "type": "vowel"}, {"text": "ܝ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] }
+      },
+      "passive-participle": {
+        "ms": { "form": "ܩܺܝܡ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܺܝ", "type": "vowel"}, {"text": "ܡ", "type": "root"}] },
+        "fs": { "form": "ܩܺܝܡܳܐ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܺܝ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܳܐ", "type": "suffix"}] },
+        "mp": { "form": "ܩܺܝܡܺܝܢ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܺܝ", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܺܝܢ", "type": "suffix"}] },
+        "fp": { "form": "ܩܺܝ̈ܡܳܢ", "segments": [{"text": "ܩ", "type": "root"}, {"text": "ܺܝ̈", "type": "vowel"}, {"text": "ܡ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] }
+      }
+    }
+  },
+  "notes": "Ayin-Waw (hollow) verbs (גזרת ע״ו) - the paradigm verb ܩܡ (to stand, arise)",
+  "createdAt": "2024-01-13T00:00:00.000Z",
+  "updatedAt": "2024-01-13T00:00:00.000Z"
+}

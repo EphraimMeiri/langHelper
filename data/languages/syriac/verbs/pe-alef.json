@@ -1,0 +1,62 @@
+{
+  "id": "syriac-pe-alef",
+  "languageId": "syriac",
+  "class": "pe-alef",
+  "classDisplayName": "Pe-Alef Verbs (פ״א)",
+  "paradigmRoot": "ܐܟܠ",
+  "rootMeaning": "to eat",
+  "stems": {
+    "peal": {
+      "past": {
+        "3ms": { "form": "ܐܶܟܰܠ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܟܰ", "type": "root"}, {"text": "ܠ", "type": "root"}] },
+        "3fs": { "form": "ܐܶܟܠܰܬ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܟ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܰܬ", "type": "suffix"}] },
+        "2ms": { "form": "ܐܶܟܰܠܬ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܟܰ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܬ", "type": "suffix"}] },
+        "2fs": { "form": "ܐܶܟܰܠܬܝ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܟܰ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܬܝ", "type": "suffix"}] },
+        "1ms": { "form": "ܐܶܟܠܶܬ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܟ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܶܬ", "type": "suffix"}] },
+        "1fs": { "form": "ܐܶܟܠܶܬ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܟ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܶܬ", "type": "suffix"}] },
+        "3mp": { "form": "ܐܶܟܰܠܘ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܟܰ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܘ", "type": "suffix"}] },
+        "3fp": { "form": "ܐܶܟܰܠ̈ܝ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܟܰ", "type": "root"}, {"text": "ܠ̈", "type": "root"}, {"text": "ܝ", "type": "suffix"}] },
+        "2mp": { "form": "ܐܶܟܰܠܬܘܢ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܟܰ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܬܘܢ", "type": "suffix"}] },
+        "2fp": { "form": "ܐܶܟܰܠܬܶܝܢ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܟܰ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܬܶܝܢ", "type": "suffix"}] },
+        "1cp": { "form": "ܐܶܟܰܠܢ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܟܰ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܢ", "type": "suffix"}] }
+      },
+      "future": {
+        "3ms": { "form": "ܢܶܐܟܽܘܠ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "3fs": { "form": "ܬܶܐܟܽܘܠ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "2ms": { "form": "ܬܶܐܟܽܘܠ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "2fs": { "form": "ܬܶܐܟܠܺܝܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܺܝܢ", "type": "suffix"}] },
+        "1ms": { "form": "ܐܶܟܽܘܠ", "segments": [{"text": "ܐ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܟ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "1fs": { "form": "ܐܶܟܽܘܠ", "segments": [{"text": "ܐ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܟ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "3mp": { "form": "ܢܶܐܟܠܽܘܢ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܽܘܢ", "type": "suffix"}] },
+        "3fp": { "form": "ܢܶܐ̈ܟܠܳܢ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ̈", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] },
+        "2mp": { "form": "ܬܶܐܟܠܽܘܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܽܘܢ", "type": "suffix"}] },
+        "2fp": { "form": "ܬܶܐ̈ܟܠܳܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ̈", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] },
+        "1cp": { "form": "ܢܶܐܟܽܘܠ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] }
+      },
+      "imperative": {
+        "2ms": { "form": "ܐܟܽܘܠ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "2fs": { "form": "ܐܟܽܘܠܝ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܝ", "type": "suffix"}] },
+        "2mp": { "form": "ܐܟܽܘܠܘ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܘ", "type": "suffix"}] },
+        "2fp": { "form": "ܐܟܽܘ̈ܠܝ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܽܘ̈", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܝ", "type": "suffix"}] }
+      },
+      "infinitive": {
+        "abs": { "form": "ܡܶܐܟܰܠ", "segments": [{"text": "ܡ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}, {"text": "ܟܰ", "type": "root"}, {"text": "ܠ", "type": "root"}] }
+      },
+      "active-participle": {
+        "ms": { "form": "ܐܳܟܶܠ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܟ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "fs": { "form": "ܐܳܟܠܳܐ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܟ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܐ", "type": "suffix"}] },
+        "mp": { "form": "ܐܳܟܠܺܝܢ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܟ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܺܝܢ", "type": "suffix"}] },
+        "fp": { "form": "ܐܳ̈ܟܠܳܢ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܳ̈", "type": "vowel"}, {"text": "ܟ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] }
+      },
+      "passive-participle": {
+        "ms": { "form": "ܐܟܺܝܠ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܺܝ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "fs": { "form": "ܐܟܺܝܠܳܐ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܺܝ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܐ", "type": "suffix"}] },
+        "mp": { "form": "ܐܟܺܝܠܺܝܢ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܺܝ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܺܝܢ", "type": "suffix"}] },
+        "fp": { "form": "ܐܟܺܝ̈ܠܳܢ", "segments": [{"text": "ܐ", "type": "root"}, {"text": "ܟ", "type": "root"}, {"text": "ܺܝ̈", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] }
+      }
+    }
+  },
+  "notes": "Pe-Alef verbs (גזרת פ״א) - the paradigm verb ܐܟܠ (to eat). The initial alef is a guttural; in the future tense it is retained in writing but quiescent. The 1st person singular future prefix ܐ merges with the root alef.",
+  "createdAt": "2024-01-13T00:00:00.000Z",
+  "updatedAt": "2024-01-13T00:00:00.000Z"
+}

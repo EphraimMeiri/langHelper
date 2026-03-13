@@ -1,0 +1,62 @@
+{
+  "id": "syriac-ayin-ayin",
+  "languageId": "syriac",
+  "class": "ayin-ayin",
+  "classDisplayName": "Ayin-Ayin / Geminate Verbs (ע״ע)",
+  "paradigmRoot": "ܥܠ",
+  "rootMeaning": "to enter",
+  "stems": {
+    "peal": {
+      "past": {
+        "3ms": { "form": "ܥܰܠ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "3fs": { "form": "ܥܶܠܠܰܬ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܰܬ", "type": "suffix"}] },
+        "2ms": { "form": "ܥܰܠܬ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܬ", "type": "suffix"}] },
+        "2fs": { "form": "ܥܰܠܬܝ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܬܝ", "type": "suffix"}] },
+        "1ms": { "form": "ܥܶܠܠܶܬ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܶܬ", "type": "suffix"}] },
+        "1fs": { "form": "ܥܶܠܠܶܬ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܶܬ", "type": "suffix"}] },
+        "3mp": { "form": "ܥܰܠܘ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܘ", "type": "suffix"}] },
+        "3fp": { "form": "ܥܰܠ̈ܝ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܠ̈", "type": "root"}, {"text": "ܝ", "type": "suffix"}] },
+        "2mp": { "form": "ܥܰܠܬܘܢ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܬܘܢ", "type": "suffix"}] },
+        "2fp": { "form": "ܥܰܠܬܶܝܢ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܬܶܝܢ", "type": "suffix"}] },
+        "1cp": { "form": "ܥܰܠܢ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܢ", "type": "suffix"}] }
+      },
+      "future": {
+        "3ms": { "form": "ܢܶܥܽܘܠ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܥ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "3fs": { "form": "ܬܶܥܽܘܠ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܥ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "2ms": { "form": "ܬܶܥܽܘܠ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܥ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "2fs": { "form": "ܬܶܥܠܺܝܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܥ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܺܝܢ", "type": "suffix"}] },
+        "1ms": { "form": "ܐܶܥܽܘܠ", "segments": [{"text": "ܐ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܥ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "1fs": { "form": "ܐܶܥܽܘܠ", "segments": [{"text": "ܐ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܥ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "3mp": { "form": "ܢܶܥܠܽܘܢ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܥ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܽܘܢ", "type": "suffix"}] },
+        "3fp": { "form": "ܢܶܥ̈ܠܳܢ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܥ̈", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] },
+        "2mp": { "form": "ܬܶܥܠܽܘܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܥ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܽܘܢ", "type": "suffix"}] },
+        "2fp": { "form": "ܬܶܥ̈ܠܳܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܥ̈", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] },
+        "1cp": { "form": "ܢܶܥܽܘܠ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܥ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] }
+      },
+      "imperative": {
+        "2ms": { "form": "ܥܽܘܠ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "2fs": { "form": "ܥܽܘܠܝ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܝ", "type": "suffix"}] },
+        "2mp": { "form": "ܥܽܘܠܘ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܘ", "type": "suffix"}] },
+        "2fp": { "form": "ܥܽܘ̈ܠܝ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܽܘ̈", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܝ", "type": "suffix"}] }
+      },
+      "infinitive": {
+        "abs": { "form": "ܡܶܥܰܠ", "segments": [{"text": "ܡ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܥ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] }
+      },
+      "active-participle": {
+        "ms": { "form": "ܥܳܐܶܠ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܐ", "type": "vowel"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "fs": { "form": "ܥܳܠܳܐ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܐ", "type": "suffix"}] },
+        "mp": { "form": "ܥܳܠܺܝܢ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܺܝܢ", "type": "suffix"}] },
+        "fp": { "form": "ܥܳ̈ܠܳܢ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܳ̈", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] }
+      },
+      "passive-participle": {
+        "ms": { "form": "ܥܺܝܠ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܺܝ", "type": "vowel"}, {"text": "ܠ", "type": "root"}] },
+        "fs": { "form": "ܥܺܝܠܳܐ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܺܝ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܐ", "type": "suffix"}] },
+        "mp": { "form": "ܥܺܝܠܺܝܢ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܺܝ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܺܝܢ", "type": "suffix"}] },
+        "fp": { "form": "ܥܺܝ̈ܠܳܢ", "segments": [{"text": "ܥ", "type": "root"}, {"text": "ܺܝ̈", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] }
+      }
+    }
+  },
+  "notes": "Ayin-Ayin (geminate) verbs (גזרת ע״ע) - the paradigm verb ܥܠ (to enter), root ע-ל-ל. The 2nd and 3rd radicals are identical and often contract. In the 3ms past, the verb appears biconsonantal. When suffixes are added (3fs, 1ms etc.) the doubled letter may reappear.",
+  "createdAt": "2024-01-13T00:00:00.000Z",
+  "updatedAt": "2024-01-13T00:00:00.000Z"
+}

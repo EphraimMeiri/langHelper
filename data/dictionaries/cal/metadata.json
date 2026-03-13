@@ -1,0 +1,243 @@
+{
+  "version": "1.0",
+  "build_date": "2026-03-05T08:29:33.068Z",
+  "source": "CAL Dictionary + ol_extra.tsv + ol_connections.tsv",
+  "total_entries": 42021,
+  "dialects": {
+    "10": {
+      "abbrev": "BA",
+      "name": "Biblical Aramaic"
+    },
+    "11": {
+      "abbrev": "BA-Da",
+      "name": "Biblical Aramaic (Daniel)"
+    },
+    "12": {
+      "abbrev": "BA-Ez",
+      "name": "Biblical Aramaic (Ezra)"
+    },
+    "13": {
+      "abbrev": "JLAtg",
+      "name": "Jewish Literary Aramaic, Targumic"
+    },
+    "14": {
+      "abbrev": "PTA",
+      "name": "Palestinian Targumic Aramaic"
+    },
+    "15": {
+      "abbrev": "PTA²",
+      "name": "Palestinian Targumic Aramaic (variant)"
+    },
+    "20": {
+      "abbrev": "OA",
+      "name": "Old Aramaic"
+    },
+    "21": {
+      "abbrev": "OA-E",
+      "name": "Old Aramaic (Eastern)"
+    },
+    "22": {
+      "abbrev": "OfA-Eg",
+      "name": "Official Aramaic (Egyptian)"
+    },
+    "23": {
+      "abbrev": "OfA",
+      "name": "Official (Achaemenid) Aramaic"
+    },
+    "24": {
+      "abbrev": "OfA-Ir",
+      "name": "Official Aramaic (Iranian)"
+    },
+    "25": {
+      "abbrev": "OfA-Ms",
+      "name": "Official Aramaic (Mesopotamian)"
+    },
+    "26": {
+      "abbrev": "OfA-Pr",
+      "name": "Official Aramaic (Persian origin)"
+    },
+    "27": {
+      "abbrev": "OfA-Sm",
+      "name": "Official Aramaic (Samaria)"
+    },
+    "28": {
+      "abbrev": "Nab",
+      "name": "Nabataean"
+    },
+    "29": {
+      "abbrev": "OfA-W",
+      "name": "Official Aramaic (Western)"
+    },
+    "31": {
+      "abbrev": "Hat",
+      "name": "Hatran"
+    },
+    "32": {
+      "abbrev": "Palm",
+      "name": "Palmyrene"
+    },
+    "41": {
+      "abbrev": "Qum",
+      "name": "Qumran Aramaic"
+    },
+    "42": {
+      "abbrev": "Qum²",
+      "name": "Qumran Aramaic (variant)"
+    },
+    "43": {
+      "abbrev": "Jud",
+      "name": "Judean Aramaic"
+    },
+    "44": {
+      "abbrev": "Jud²",
+      "name": "Judean archival texts"
+    },
+    "45": {
+      "abbrev": "DSS",
+      "name": "Dead Sea Scroll Aramaic"
+    },
+    "46": {
+      "abbrev": "DSS²",
+      "name": "Dead Sea Scroll Aramaic (variant)"
+    },
+    "50": {
+      "abbrev": "LJLA",
+      "name": "Late Jewish Literary Aramaic"
+    },
+    "51": {
+      "abbrev": "JBA",
+      "name": "Jewish Babylonian Aramaic"
+    },
+    "52": {
+      "abbrev": "JBAg",
+      "name": "Jewish Babylonian Aramaic (Gaonic)"
+    },
+    "53": {
+      "abbrev": "JPA",
+      "name": "Jewish Palestinian Aramaic"
+    },
+    "54": {
+      "abbrev": "CPA",
+      "name": "Christian Palestinian Aramaic"
+    },
+    "55": {
+      "abbrev": "PTA³",
+      "name": "Palestinian Targumic Aramaic (late)"
+    },
+    "56": {
+      "abbrev": "Sam",
+      "name": "Samaritan Aramaic"
+    },
+    "60": {
+      "abbrev": "Syr",
+      "name": "Syriac"
+    },
+    "65": {
+      "abbrev": "LSyr",
+      "name": "Late Syriac"
+    },
+    "70": {
+      "abbrev": "EAr",
+      "name": "Eastern Aramaic (general)"
+    },
+    "71": {
+      "abbrev": "Man",
+      "name": "Mandaic"
+    },
+    "72": {
+      "abbrev": "NMan",
+      "name": "Neo-Mandaic"
+    },
+    "74": {
+      "abbrev": "LEA",
+      "name": "Late Eastern Aramaic"
+    },
+    "81": {
+      "abbrev": "Gal",
+      "name": "Galilean Aramaic"
+    },
+    "82": {
+      "abbrev": "NAr",
+      "name": "Neo-Aramaic"
+    },
+    "83": {
+      "abbrev": "Tur",
+      "name": "Ṭuroyo"
+    },
+    "00": {
+      "abbrev": "Com",
+      "name": "Common Aramaic"
+    }
+  },
+  "dictionaries": {
+    "ls2": {
+      "abbrev": "LS2",
+      "name": "Lexicon Syriacum (Brockelmann)",
+      "noteFormat": "page[column]"
+    },
+    "ps": {
+      "abbrev": "PS",
+      "name": "Thesaurus Syriacus (Payne-Smith)"
+    },
+    "jps": {
+      "abbrev": "JPS",
+      "name": "Compendious Syriac Dictionary (J. Payne-Smith)"
+    },
+    "djpa": {
+      "abbrev": "DJPA",
+      "name": "Dictionary of Jewish Palestinian Aramaic (Sokoloff)"
+    },
+    "djba": {
+      "abbrev": "DJBA",
+      "name": "Dictionary of Jewish Babylonian Aramaic (Sokoloff)"
+    },
+    "md": {
+      "abbrev": "MD",
+      "name": "Mandaic Dictionary (Drower/Macuch)"
+    },
+    "jastrow": {
+      "abbrev": "Jastrow",
+      "name": "Dictionary of the Targumim (Jastrow)"
+    },
+    "levy": {
+      "abbrev": "Levy",
+      "name": "Chaldaisches Worterbuch (Levy)"
+    },
+    "tal": {
+      "abbrev": "Tal",
+      "name": "Dictionary of Samaritan Aramaic (Tal)"
+    },
+    "audo": {
+      "abbrev": "Audo",
+      "name": "Syriac Dictionary (Audo)"
+    },
+    "bb": {
+      "abbrev": "BB",
+      "name": "Lexicon (Bar Bahlul)"
+    },
+    "ba": {
+      "abbrev": "BA",
+      "name": "Lexicon (Bar Ali)"
+    },
+    "dnwsi": {
+      "abbrev": "DNWSI",
+      "name": "Dictionary of North-West Semitic Inscriptions"
+    },
+    "diso": {
+      "abbrev": "DISO",
+      "name": "Dictionnaire des inscriptions semitiques de l'ouest"
+    },
+    "schult": {
+      "abbrev": "Schult",
+      "name": "Lexicon Syropalaestinum (Schulthess)"
+    },
+    "dja": {
+      "abbrev": "DJA",
+      "name": "Dictionary of Jewish Aramaic"
+    },
+    "qumran": {
+      "abbrev": "Qumran",
+      "name": "Qumran Aramaic texts page reference"
+    }
+  }
+}

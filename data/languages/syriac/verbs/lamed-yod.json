@@ -1,0 +1,62 @@
+{
+  "id": "syriac-lamed-yod",
+  "languageId": "syriac",
+  "class": "lamed-yod",
+  "classDisplayName": "Lamed-Yod Verbs (ל״י)",
+  "paradigmRoot": "ܓܠܐ",
+  "rootMeaning": "to reveal",
+  "stems": {
+    "peal": {
+      "past": {
+        "3ms": { "form": "ܓܠܳܐ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܐ", "type": "root"}] },
+        "3fs": { "form": "ܓܶܠܝܰܬ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܝ", "type": "root"}, {"text": "ܰܬ", "type": "suffix"}] },
+        "2ms": { "form": "ܓܠܰܝܬ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܝ", "type": "root"}, {"text": "ܬ", "type": "suffix"}] },
+        "2fs": { "form": "ܓܠܰܝܬܝ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܝ", "type": "root"}, {"text": "ܬܝ", "type": "suffix"}] },
+        "1ms": { "form": "ܓܶܠܝܶܬ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܝ", "type": "root"}, {"text": "ܶܬ", "type": "suffix"}] },
+        "1fs": { "form": "ܓܶܠܝܶܬ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܝ", "type": "root"}, {"text": "ܶܬ", "type": "suffix"}] },
+        "3mp": { "form": "ܓܠܰܘ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܘ", "type": "suffix"}] },
+        "3fp": { "form": "ܓܠܰܝ̈", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܝ̈", "type": "suffix"}] },
+        "2mp": { "form": "ܓܠܰܝܬܘܢ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܝ", "type": "root"}, {"text": "ܬܘܢ", "type": "suffix"}] },
+        "2fp": { "form": "ܓܠܰܝܬܶܝܢ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܝ", "type": "root"}, {"text": "ܬܶܝܢ", "type": "suffix"}] },
+        "1cp": { "form": "ܓܠܰܝܢ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܝ", "type": "root"}, {"text": "ܢ", "type": "suffix"}] }
+      },
+      "future": {
+        "3ms": { "form": "ܢܶܓܠܶܐ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}] },
+        "3fs": { "form": "ܬܶܓܠܶܐ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}] },
+        "2ms": { "form": "ܬܶܓܠܶܐ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}] },
+        "2fs": { "form": "ܬܶܓܠܶܝܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܝ", "type": "root"}, {"text": "ܢ", "type": "suffix"}] },
+        "1ms": { "form": "ܐܶܓܠܶܐ", "segments": [{"text": "ܐ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}] },
+        "1fs": { "form": "ܐܶܓܠܶܐ", "segments": [{"text": "ܐ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}] },
+        "3mp": { "form": "ܢܶܓܠܽܘܢ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܽܘܢ", "type": "suffix"}] },
+        "3fp": { "form": "ܢܶܓ̈ܠܝܳܢ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܓ̈", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܝ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] },
+        "2mp": { "form": "ܬܶܓܠܽܘܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܽܘܢ", "type": "suffix"}] },
+        "2fp": { "form": "ܬܶܓ̈ܠܝܳܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܓ̈", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܝ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] },
+        "1cp": { "form": "ܢܶܓܠܶܐ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}] }
+      },
+      "imperative": {
+        "2ms": { "form": "ܓܠܺܝ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܺ", "type": "vowel"}, {"text": "ܝ", "type": "root"}] },
+        "2fs": { "form": "ܓܠܳܝ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܝ", "type": "root"}] },
+        "2mp": { "form": "ܓܠܰܘ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܘ", "type": "suffix"}] },
+        "2fp": { "form": "ܓܠܰܝ̈", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܝ̈", "type": "suffix"}] }
+      },
+      "infinitive": {
+        "abs": { "form": "ܡܶܓܠܳܐ", "segments": [{"text": "ܡ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܐ", "type": "root"}] }
+      },
+      "active-participle": {
+        "ms": { "form": "ܓܳܠܶܐ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}] },
+        "fs": { "form": "ܓܳܠܝܳܐ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܝ", "type": "root"}, {"text": "ܳܐ", "type": "suffix"}] },
+        "mp": { "form": "ܓܳܠܶܝܢ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܝ", "type": "root"}, {"text": "ܢ", "type": "suffix"}] },
+        "fp": { "form": "ܓܳ̈ܠܝܳܢ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܳ̈", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܝ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] }
+      },
+      "passive-participle": {
+        "ms": { "form": "ܓܠܶܐ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܠ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܐ", "type": "root"}] },
+        "fs": { "form": "ܓܰܠܝܳܐ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܝ", "type": "root"}, {"text": "ܳܐ", "type": "suffix"}] },
+        "mp": { "form": "ܓܰܠܶܝܢ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܠ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܝ", "type": "root"}, {"text": "ܢ", "type": "suffix"}] },
+        "fp": { "form": "ܓܰܠ̈ܝܳܢ", "segments": [{"text": "ܓ", "type": "root"}, {"text": "ܰ", "type": "vowel"}, {"text": "ܠ̈", "type": "root"}, {"text": "ܝ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] }
+      }
+    }
+  },
+  "notes": "Lamed-Yod verbs (גזרת ל״י) - the paradigm verb ܓܠܐ (to reveal). The final radical alternates between alef and yod depending on the form. Before consonantal suffixes, yod appears; in pause or final position, alef may appear.",
+  "createdAt": "2024-01-13T00:00:00.000Z",
+  "updatedAt": "2024-01-13T00:00:00.000Z"
+}

@@ -1,0 +1,62 @@
+{
+  "id": "syriac-pe-nun",
+  "languageId": "syriac",
+  "class": "pe-nun",
+  "classDisplayName": "Pe-Nun Verbs (פ״נ)",
+  "paradigmRoot": "ܢܦܩ",
+  "rootMeaning": "to go out",
+  "stems": {
+    "peal": {
+      "past": {
+        "3ms": { "form": "ܢܦܰܩ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܦܰ", "type": "root"}, {"text": "ܩ", "type": "root"}] },
+        "3fs": { "form": "ܢܶܦܩܰܬ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܰܬ", "type": "suffix"}] },
+        "2ms": { "form": "ܢܦܰܩܬ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܦܰ", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܬ", "type": "suffix"}] },
+        "2fs": { "form": "ܢܦܰܩܬܝ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܦܰ", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܬܝ", "type": "suffix"}] },
+        "1ms": { "form": "ܢܶܦܩܶܬ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܶܬ", "type": "suffix"}] },
+        "1fs": { "form": "ܢܶܦܩܶܬ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܶܬ", "type": "suffix"}] },
+        "3mp": { "form": "ܢܦܰܩܘ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܦܰ", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܘ", "type": "suffix"}] },
+        "3fp": { "form": "ܢܦܰܩ̈ܝ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܦܰ", "type": "root"}, {"text": "ܩ̈", "type": "root"}, {"text": "ܝ", "type": "suffix"}] },
+        "2mp": { "form": "ܢܦܰܩܬܘܢ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܦܰ", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܬܘܢ", "type": "suffix"}] },
+        "2fp": { "form": "ܢܦܰܩܬܶܝܢ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܦܰ", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܬܶܝܢ", "type": "suffix"}] },
+        "1cp": { "form": "ܢܦܰܩܢ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܦܰ", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܢ", "type": "suffix"}] }
+      },
+      "future": {
+        "3ms": { "form": "ܢܶܦܽܘܩ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܩ", "type": "root"}] },
+        "3fs": { "form": "ܬܶܦܽܘܩ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܩ", "type": "root"}] },
+        "2ms": { "form": "ܬܶܦܽܘܩ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܩ", "type": "root"}] },
+        "2fs": { "form": "ܬܶܦܩܺܝܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܺܝܢ", "type": "suffix"}] },
+        "1ms": { "form": "ܐܶܦܽܘܩ", "segments": [{"text": "ܐ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܩ", "type": "root"}] },
+        "1fs": { "form": "ܐܶܦܽܘܩ", "segments": [{"text": "ܐ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܩ", "type": "root"}] },
+        "3mp": { "form": "ܢܶܦܩܽܘܢ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܽܘܢ", "type": "suffix"}] },
+        "3fp": { "form": "ܢܶܦ̈ܩܳܢ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܦ̈", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] },
+        "2mp": { "form": "ܬܶܦܩܽܘܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܽܘܢ", "type": "suffix"}] },
+        "2fp": { "form": "ܬܶܦ̈ܩܳܢ", "segments": [{"text": "ܬ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܦ̈", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] },
+        "1cp": { "form": "ܢܶܦܽܘܩ", "segments": [{"text": "ܢ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܩ", "type": "root"}] }
+      },
+      "imperative": {
+        "2ms": { "form": "ܦܽܘܩ", "segments": [{"text": "ܦ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܩ", "type": "root"}] },
+        "2fs": { "form": "ܦܽܘܩܝ", "segments": [{"text": "ܦ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܝ", "type": "suffix"}] },
+        "2mp": { "form": "ܦܽܘܩܘ", "segments": [{"text": "ܦ", "type": "root"}, {"text": "ܽܘ", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܘ", "type": "suffix"}] },
+        "2fp": { "form": "ܦܽܘ̈ܩܝ", "segments": [{"text": "ܦ", "type": "root"}, {"text": "ܽܘ̈", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܝ", "type": "suffix"}] }
+      },
+      "infinitive": {
+        "abs": { "form": "ܡܶܦܰܩ", "segments": [{"text": "ܡ", "type": "prefix"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܦܰ", "type": "root"}, {"text": "ܩ", "type": "root"}] }
+      },
+      "active-participle": {
+        "ms": { "form": "ܢܳܦܶܩ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܶ", "type": "vowel"}, {"text": "ܩ", "type": "root"}] },
+        "fs": { "form": "ܢܳܦܩܳܐ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܳܐ", "type": "suffix"}] },
+        "mp": { "form": "ܢܳܦܩܺܝܢ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܳ", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܺܝܢ", "type": "suffix"}] },
+        "fp": { "form": "ܢܳ̈ܦܩܳܢ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܳ̈", "type": "vowel"}, {"text": "ܦ", "type": "root"}, {"text": "ܩ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] }
+      },
+      "passive-participle": {
+        "ms": { "form": "ܢܦܺܝܩ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܦ", "type": "root"}, {"text": "ܺܝ", "type": "vowel"}, {"text": "ܩ", "type": "root"}] },
+        "fs": { "form": "ܢܦܺܝܩܳܐ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܦ", "type": "root"}, {"text": "ܺܝ", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܳܐ", "type": "suffix"}] },
+        "mp": { "form": "ܢܦܺܝܩܺܝܢ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܦ", "type": "root"}, {"text": "ܺܝ", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܺܝܢ", "type": "suffix"}] },
+        "fp": { "form": "ܢܦܺܝ̈ܩܳܢ", "segments": [{"text": "ܢ", "type": "root"}, {"text": "ܦ", "type": "root"}, {"text": "ܺܝ̈", "type": "vowel"}, {"text": "ܩ", "type": "root"}, {"text": "ܳܢ", "type": "suffix"}] }
+      }
+    }
+  },
+  "notes": "Pe-Nun verbs (גזרת פ״נ) - the paradigm verb ܢܦܩ (to go out). In the Peal future tense and imperative, the initial nun assimilates into the second root letter.",
+  "createdAt": "2024-01-13T00:00:00.000Z",
+  "updatedAt": "2024-01-13T00:00:00.000Z"
+}
