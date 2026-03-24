@@ -10,7 +10,7 @@ export interface SedraObjectReference {
 export interface SedraWord {
   word: SedraObjectReference;
   lexeme: SedraObjectReference;
-  glosses?: Record<string, string>;
+  glosses?: Record<string, string | string[]>;
   syriac: string; // Consonantal form
   western?: string; // Western vocalized
   eastern?: string; // Eastern vocalized
@@ -33,7 +33,7 @@ export interface SedraWord {
 export interface SedraLexeme {
   lexeme: SedraObjectReference;
   syriac: string;
-  glosses?: Record<string, string>;
+  glosses?: Record<string, string | string[]>;
   etymologies?: Record<string, string>;
   root?: SedraObjectReference;
   words?: SedraObjectReference[];
@@ -274,10 +274,12 @@ export function formatPNG(word: SedraWord): string {
 
 // Get English gloss from SEDRA word
 export function getGloss(word: SedraWord): string | undefined {
-  if (word.glosses) {
-    return word.glosses['en'] || word.glosses['english'] || Object.values(word.glosses)[0];
-  }
-  return undefined;
+  if (!word.glosses) return undefined;
+  const raw = word.glosses['eng'] || word.glosses['en'] || word.glosses['english'] || Object.values(word.glosses)[0];
+  if (!raw) return undefined;
+  // SEDRA returns glosses as string[] (e.g. ["glorify","praise","commend"])
+  if (Array.isArray(raw)) return raw.join(', ');
+  return raw;
 }
 
 // Strip vowels from Syriac text (for consonantal matching)
