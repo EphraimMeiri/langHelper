@@ -4,6 +4,7 @@ import {
   SYRIAC_CONSONANT_MAP, SYRIAC_VOWEL_MAP,
   HEBREW_CONSONANT_MAP, HEBREW_VOWEL_MAP,
 } from '../../utils/transliteration.ts';
+import { syriacToCAL, calToHebrew } from '../../utils/calTransliteration.ts';
 
 interface OnScreenKeyboardProps {
   script: ScriptType;
@@ -168,6 +169,17 @@ export function OnScreenKeyboard({
     return m;
   }, [script]);
 
+  // For Syriac keys: build char → Hebrew equivalent for the corner label
+  const hebrewEquivMap = useMemo(() => {
+    if (script !== 'syriac') return new Map<string, string>();
+    const m = new Map<string, string>();
+    for (const { char } of SYRIAC_CONSONANT_MAP) {
+      const heb = calToHebrew(syriacToCAL(char));
+      if (heb) m.set(char, heb);
+    }
+    return m;
+  }, [script]);
+
   if (isCollapsed) {
     return (
       <button
@@ -208,6 +220,7 @@ export function OnScreenKeyboard({
           <div key={`letters-${rowIdx}`} className="flex gap-1 justify-center flex-wrap">
             {row.map((key) => {
               const shortcut = shortcutMap.get(key.char);
+              const hebrewEquiv = hebrewEquivMap.get(key.char);
               return (
                 <button
                   key={key.char}
@@ -216,6 +229,11 @@ export function OnScreenKeyboard({
                   className={`relative w-9 h-9 text-lg ${fontClass} bg-white dark:bg-gray-700 rounded shadow-sm hover:bg-blue-50 dark:hover:bg-blue-900 hover:shadow transition-all active:scale-95`}
                 >
                   {key.char}
+                  {hebrewEquiv && (
+                    <span className="absolute top-0 left-0.5 text-[8px] font-hebrew text-gray-400 dark:text-gray-500 leading-none">
+                      {hebrewEquiv}
+                    </span>
+                  )}
                   {shortcut && (
                     <span className="absolute bottom-0 right-0.5 text-[8px] text-gray-400 dark:text-gray-500 font-mono leading-none">
                       {shortcut}
