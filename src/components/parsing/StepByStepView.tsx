@@ -213,7 +213,9 @@ export function StepByStepView() {
                       syriacVocalization === 'eastern'
                         ? result.eastern || result.western || result.syriac
                         : result.western || result.eastern || result.syriac,
-                      { showVowels, vowelStyle: syriacVocalization }
+                      // The string is already in the target vocalization style —
+                      // only strip vowels if needed, don't re-convert
+                      { showVowels }
                     )}
                   </span>
                   <span className="text-gray-500 dark:text-gray-400">
