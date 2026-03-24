@@ -78,16 +78,17 @@ export const HEBREW_CONSONANT_MAP: TranslitMapping[] = [
 ];
 
 // Hebrew vowels (Tiberian)
+// Note: 'E' is reserved for Ayin (consonant), so Tsere uses 'ee'
 export const HEBREW_VOWEL_MAP: TranslitMapping[] = [
   { latin: 'a', char: 'ַ', name: 'Patah (a)' },
   { latin: 'A', char: 'ָ', name: 'Qamats (a/o)' },
   { latin: 'e', char: 'ֶ', name: 'Segol (e)' },
-  { latin: 'E', char: 'ֵ', name: 'Tsere (e)' },
+  { latin: 'ee', char: 'ֵ', name: 'Tsere (ee)' },
   { latin: 'i', char: 'ִ', name: 'Hiriq (i)' },
   { latin: 'o', char: 'ֹ', name: 'Holam (o)' },
   { latin: 'u', char: 'ֻ', name: 'Qubuts (u)' },
-  { latin: 'U', char: 'וּ', name: 'Shureq (u)' },
-  { latin: ':', char: 'ְ', name: 'Shva' },
+  { latin: 'U', char: 'וּ', name: 'Shureq (U)' },
+  { latin: ':', char: 'ְ', name: 'Shva (:)' },
 ];
 
 // Build lookup map for fast transliteration

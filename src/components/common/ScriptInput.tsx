@@ -3,6 +3,7 @@ import { OnScreenKeyboard } from './OnScreenKeyboard.tsx';
 import { TransliterationHelp } from './TransliterationHelp.tsx';
 import { transliterateWithMappings } from '../../utils/transliteration.ts';
 import { useTransliterationStore } from '../../stores/transliterationStore.ts';
+import { isHebrewScript, hebrewToCAL, calToSyriac } from '../../utils/calTransliteration.ts';
 import type { ScriptType, TextDirection } from '../../types/language.ts';
 
 interface ScriptInputProps {
@@ -93,6 +94,28 @@ export function ScriptInput({
           lastValueRef.current = finalValue;
 
           // Set cursor position after React re-render
+          requestAnimationFrame(() => {
+            if (inputRef.current) {
+              inputRef.current.setSelectionRange(newCursorPos, newCursorPos);
+            }
+          });
+          return;
+        }
+      }
+
+      // Convert Hebrew → Syriac when typing Hebrew into a Syriac input
+      if (script === 'syriac' && isHebrewScript(addedText)) {
+        const converted = calToSyriac(hebrewToCAL(addedText));
+        if (converted) {
+          const before = newValue.slice(0, addedStart);
+          const after = newValue.slice(selStart);
+          const finalValue = before + converted + after;
+
+          onChange(finalValue);
+          const newCursorPos = addedStart + converted.length;
+          setCursorPosition(newCursorPos);
+          lastValueRef.current = finalValue;
+
           requestAnimationFrame(() => {
             if (inputRef.current) {
               inputRef.current.setSelectionRange(newCursorPos, newCursorPos);

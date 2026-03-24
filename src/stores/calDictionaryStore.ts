@@ -103,52 +103,69 @@ export const useCALDictionaryStore = create<CALDictionaryStore>()((set, get) => 
     const isScript = isSyriacScript(term) || isHebrewScript(term);
     const isEnglish = /^[a-z\s]+$/i.test(term.trim()) && !normalized.includes('(') && !normalized.includes(')');
 
-    const results: SearchResult[] = [];
+    // Sorted consonants of the query for fuzzy fallback (handles spelling variants
+    // where weak consonants like alap appear in different positions, e.g. ܩܦܐܠܘܢ vs ܩܦܠܐܘܢ)
+    const sortedNormalized = normalized.split('').sort().join('');
+
+    // Score: 0 = exact/prefix match, 1 = fuzzy consonant match
+    const exactResults: SearchResult[] = [];
+    const fuzzyResults: SearchResult[] = [];
     const limit = 100;
 
     for (const entry of index) {
-      if (results.length >= limit) break;
+      if (exactResults.length + fuzzyResults.length >= limit * 2) break;
 
       // Syriac-only filter: skip entries with no Syriac dialect meanings
       if (syriacOnly && !entry.y) continue;
 
-      let match = false;
+      let exactMatch = false;
+      let fuzzyMatch = false;
 
       if (isEnglish) {
         // Search by English gloss
-        match = entry.g.toLowerCase().includes(normalized);
+        exactMatch = entry.g.toLowerCase().includes(normalized);
       } else if (isScript) {
-        // Search by Syriac or Hebrew script
+        // Search by Syriac or Hebrew script — exact/prefix first
         if (isSyriacScript(term)) {
-          match = entry.s.includes(term.trim()) ||
+          exactMatch = entry.s.includes(term.trim()) ||
             entry.l.toLowerCase().startsWith(normalized.toLowerCase());
         } else {
-          match = entry.h.includes(term.trim()) ||
+          exactMatch = entry.h.includes(term.trim()) ||
             entry.l.toLowerCase().startsWith(normalized.toLowerCase());
+        }
+        // Fuzzy fallback: same consonants, possibly reordered (spelling variants)
+        if (!exactMatch) {
+          const lemmaConsonants = entry.l.replace(/#\d+/, '').replace(/\s+[A-Z].*$/, '').toLowerCase();
+          fuzzyMatch = lemmaConsonants.split('').sort().join('') === sortedNormalized;
         }
       } else {
         // CAL ASCII search — match lemma prefix
-        match = entry.l.toLowerCase().startsWith(normalized);
-        if (!match) {
+        exactMatch = entry.l.toLowerCase().startsWith(normalized);
+        if (!exactMatch) {
           // Also try without POS suffix for partial matches
           const lemmaWord = entry.l.replace(/\s+[A-Z].*$/, '').toLowerCase();
-          match = lemmaWord.startsWith(normalized);
+          exactMatch = lemmaWord.startsWith(normalized);
         }
       }
 
-      if (match) {
-        results.push({
-          lemma: entry.l,
-          syriac: entry.s,
-          hebrew: entry.h,
-          pos: entry.p,
-          gloss: entry.g,
-          fileKey: entry.f,
-        });
+      const result: SearchResult = {
+        lemma: entry.l,
+        syriac: entry.s,
+        hebrew: entry.h,
+        pos: entry.p,
+        gloss: entry.g,
+        fileKey: entry.f,
+      };
+
+      if (exactMatch) {
+        exactResults.push(result);
+      } else if (fuzzyMatch) {
+        fuzzyResults.push(result);
       }
     }
 
-    set({ results });
+    // Exact/prefix matches first, fuzzy matches after, capped at limit
+    set({ results: [...exactResults, ...fuzzyResults].slice(0, limit) });
   },
 
   selectEntry: async (lemma: string, fileKey: string) => {

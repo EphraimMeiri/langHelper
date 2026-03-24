@@ -43,10 +43,13 @@ export const useSettingsStore = create<SettingsState>()(
       showSegmentColors: true,
       darkMode: 'system',
       keyboardDefaultOpen: false,
-      syriacVocalization: 'western',
+      syriacVocalization: 'eastern',
 
       // Actions
-      setSyriacFont: (font) => set({ syriacFont: font }),
+      setSyriacFont: (font) => set({
+        syriacFont: font,
+        syriacVocalization: font === 'serto' ? 'western' : 'eastern',
+      }),
       setHebrewFont: (font) => set({ hebrewFont: font }),
       setFontSize: (size) => set({ fontSize: size }),
       setShowVowels: (show) => set({ showVowels: show }),

@@ -78,8 +78,15 @@ export function TransliterationHelp({ script }: TransliterationHelpProps) {
             <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400">
               <p><strong>Tips:</strong></p>
               <ul className="list-disc list-inside mt-1 space-y-0.5">
-                <li><code className="bg-gray-100 dark:bg-gray-700 px-1 rounded">sh</code> = shin/shin</li>
-                <li>Uppercase for emphatics (T, S) or finals (K, M, N)</li>
+                <li><code className="bg-gray-100 dark:bg-gray-700 px-1 rounded">sh</code> = {script === 'syriac' ? 'Shin ܫ' : 'Shin ש'}</li>
+                {script === 'syriac' ? (
+                  <li>Uppercase for emphatics: <code className="bg-gray-100 dark:bg-gray-700 px-1 rounded">T</code> Teth, <code className="bg-gray-100 dark:bg-gray-700 px-1 rounded">S</code> Tsade</li>
+                ) : (
+                  <>
+                    <li>Uppercase for finals: <code className="bg-gray-100 dark:bg-gray-700 px-1 rounded">K</code> ך, <code className="bg-gray-100 dark:bg-gray-700 px-1 rounded">M</code> ם, <code className="bg-gray-100 dark:bg-gray-700 px-1 rounded">N</code> ן, <code className="bg-gray-100 dark:bg-gray-700 px-1 rounded">P</code> ף, <code className="bg-gray-100 dark:bg-gray-700 px-1 rounded">Z</code> ץ</li>
+                    <li><code className="bg-gray-100 dark:bg-gray-700 px-1 rounded">ee</code> = Tsere ֵ, <code className="bg-gray-100 dark:bg-gray-700 px-1 rounded">A</code> = Qamats ָ, <code className="bg-gray-100 dark:bg-gray-700 px-1 rounded">:</code> = Shva ְ</li>
+                  </>
+                )}
                 <li>Vowels follow the consonant they mark</li>
               </ul>
             </div>

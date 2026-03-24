@@ -162,9 +162,9 @@ function PDFDictionaryTab({ currentLang, navRequest, onNavHandled }: PDFDictiona
         const handle = await getFileHandle(dict.id);
         if (!handle) continue;
         const url = await restoreBlobUrl(handle);
-        if (url && !cancelled) {
-          setPdfPath(dict.id, url);
-        }
+        if (cancelled) break;
+        // Clear stale blob URL if restoration failed so we don't pass a dead URL to react-pdf
+        setPdfPath(dict.id, url ?? '');
       }
       if (!cancelled) markPdfPathsRestored();
     })();
@@ -264,6 +264,29 @@ function PDFDictionaryTab({ currentLang, navRequest, onNavHandled }: PDFDictiona
     setAnchorPrefix('');
     setAnchorPage('');
     setShowAddAnchor(false);
+  };
+
+  const relinkFileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleRelinkPdf = async () => {
+    if (!currentDict) return;
+    if (hasFileSystemAccess) {
+      const result = await pickPdfFile();
+      if (!result) return;
+      setPdfPath(currentDict.id, result.blobUrl);
+      await saveFileHandle(currentDict.id, result.handle);
+      setPdfError(null);
+    } else {
+      relinkFileInputRef.current?.click();
+    }
+  };
+
+  const handleRelinkFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !currentDict) return;
+    setPdfPath(currentDict.id, URL.createObjectURL(file));
+    setPdfError(null);
+    e.target.value = '';
   };
 
   const handleDocumentLoadSuccess = ({ numPages: n }: { numPages: number }) => {
@@ -594,28 +617,50 @@ function PDFDictionaryTab({ currentLang, navRequest, onNavHandled }: PDFDictiona
 
           {/* PDF content */}
           <div className="flex-1 overflow-auto flex items-start justify-center p-4">
+            {/* Hidden file input for re-linking on browsers without File System Access API */}
+            <input
+              ref={relinkFileInputRef}
+              type="file"
+              accept=".pdf"
+              className="hidden"
+              onChange={handleRelinkFileSelected}
+            />
             {currentDict && !pdfPathsRestored ? (
               <div className="text-gray-400 dark:text-gray-500 py-12">Restoring PDF files...</div>
+            ) : currentDict && !currentDict.pdfPath ? (
+              <div className="text-center text-gray-500 dark:text-gray-400 py-12">
+                <p className="mb-2 font-medium">PDF file needs to be re-linked</p>
+                <p className="text-sm mb-4">
+                  The file handle expired or permission was not granted. Re-select the same PDF file to continue.
+                </p>
+                <button
+                  onClick={handleRelinkPdf}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                >
+                  Re-link PDF file
+                </button>
+              </div>
             ) : currentDict ? (
               <Document
                 file={currentDict.pdfPath}
                 onLoadSuccess={handleDocumentLoadSuccess}
                 onLoadError={(error) => {
                   console.error('PDF load error:', error);
-                  setPdfError('Failed to load PDF. The file may have been removed or is inaccessible.');
+                  setPdfError('Failed to load PDF.');
                 }}
                 loading={
                   <div className="text-gray-400 dark:text-gray-500 py-12">Loading PDF...</div>
                 }
                 error={
-                  <div className="text-red-500 py-12 text-center">
-                    <p className="mb-2">Failed to load PDF</p>
-                    <p className="text-sm text-gray-500">{pdfError}</p>
-                    {!hasFileSystemAccess && (
-                      <p className="text-xs text-gray-400 mt-2">
-                        Tip: Use Chrome or Edge for persistent PDF access across page reloads.
-                      </p>
-                    )}
+                  <div className="text-center py-12">
+                    <p className="text-red-500 mb-2">Failed to load PDF</p>
+                    <p className="text-sm text-gray-500 mb-4">{pdfError}</p>
+                    <button
+                      onClick={handleRelinkPdf}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                    >
+                      Re-link PDF file
+                    </button>
                   </div>
                 }
               >
