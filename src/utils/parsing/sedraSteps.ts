@@ -80,7 +80,6 @@ const IMPERATIVE_SUFFIXES: Record<PNGKey, SuffixInfo> = {
 };
 
 function getPNGKey(word: SedraWord): PNGKey {
-  const p = word.person?.[0] ?? '';   // "first"→"f", "second"→"s", "third"→"t" ... use number
   const personMap: Record<string, string> = { first: '1', second: '2', third: '3' };
   const genderMap: Record<string, string> = { masculine: 'm', feminine: 'f', common: 'c' };
   const numberMap: Record<string, string> = { singular: 's', plural: 'p' };

@@ -24,6 +24,8 @@ export interface SedraWord {
   suffixNumber?: string;
   suffixPerson?: string;
   suffixGender?: string;
+  stem?: string;
+  category?: string;
   hasSeyame?: boolean;
   isLexicalForm?: boolean;
   isEnclitic?: boolean;
