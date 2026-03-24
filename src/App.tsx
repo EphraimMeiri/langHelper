@@ -5,6 +5,7 @@ import { TablesPage } from './pages/TablesPage.tsx';
 import { ParsePage } from './pages/ParsePage.tsx';
 import { DictionaryPage } from './pages/DictionaryPage.tsx';
 import { FlashcardsPage } from './pages/FlashcardsPage.tsx';
+import { ReaderPage } from './pages/ReaderPage.tsx';
 import { SettingsPage } from './pages/SettingsPage.tsx';
 import { useLanguageStore } from './stores/languageStore.ts';
 import { useSettingsStore } from './stores/settingsStore.ts';
@@ -73,6 +74,7 @@ export default function App() {
             <Route path="/parse" element={<ParsePage />} />
             <Route path="/dictionary" element={<DictionaryPage />} />
             <Route path="/flashcards" element={<FlashcardsPage />} />
+            <Route path="/reader" element={<ReaderPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>
         </main>

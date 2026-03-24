@@ -141,3 +141,35 @@ input[type="checkbox"] {
 input[type="radio"] {
   @apply border-gray-300 text-blue-600 focus:ring-blue-500;
 }
+
+/* CAL lexicon content panel styling */
+.cal-lexicon-content {
+  color: var(--tw-prose-body, inherit);
+}
+
+.cal-lexicon-content a {
+  @apply text-blue-600 dark:text-blue-400 hover:underline;
+}
+
+.cal-lexicon-content .syr {
+  font-family: var(--font-syriac);
+  direction: rtl;
+  unicode-bidi: embed;
+  font-size: 1.2em;
+}
+
+.cal-lexicon-content .rom {
+  font-style: italic;
+}
+
+.cal-lexicon-content .red {
+  @apply text-red-600 dark:text-red-400;
+}
+
+.cal-lexicon-content table {
+  @apply w-full text-sm;
+}
+
+.cal-lexicon-content td, .cal-lexicon-content th {
+  @apply px-2 py-1;
+}

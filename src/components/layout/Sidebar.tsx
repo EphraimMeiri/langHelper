@@ -6,6 +6,7 @@ const navItems = [
   { path: '/parse', label: 'Parse', icon: '🔍' },
   { path: '/dictionary', label: 'Dictionary', icon: '📖' },
   { path: '/flashcards', label: 'Flashcards', icon: '🎴' },
+  { path: '/reader', label: 'Reader', icon: '📜' },
   { path: '/settings', label: 'Settings', icon: '⚙️' },
 ];
 

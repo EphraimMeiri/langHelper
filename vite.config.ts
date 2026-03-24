@@ -11,4 +11,13 @@ export default defineConfig({
       '@data': path.resolve(__dirname, './data'),
     },
   },
+  server: {
+    proxy: {
+      '/cal-proxy': {
+        target: 'https://cal.huc.edu',
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/cal-proxy/, ''),
+      },
+    },
+  },
 })
