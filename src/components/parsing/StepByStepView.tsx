@@ -2,9 +2,13 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { HighlightedForm } from './HighlightedForm';
 import { useParsingStore } from '../../stores/parsingStore';
 import { conclusionToString } from '../../types/parsing';
+import type { ParseStep } from '../../types/parsing';
 import { useLanguageStore } from '../../stores/languageStore';
 import { useSettingsStore } from '../../stores/settingsStore';
 import { formatSyriacText } from '../../utils/syriacText';
+import { buildSedraSteps } from '../../utils/parsing/sedraSteps';
+import type { SedraWord } from '../../services/sedraApi';
+import { getGloss } from '../../services/sedraApi';
 
 export function StepByStepView() {
   const {
@@ -192,80 +196,18 @@ export function StepByStepView() {
 
           <div className="space-y-3">
             {currentResult.sedraResults.map((result, idx) => (
-              <div
+              <SedraResultCard
                 key={idx}
-                className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-purple-200 dark:border-purple-700"
-              >
-                <div className="flex items-center gap-4 mb-2">
-                  <span
-                    className={`text-xl ${currentLang?.script === 'syriac' ? 'font-syriac' : 'font-hebrew'
-                      }`}
-                    dir="rtl"
-                  >
-                    {formatSyriacText(
-                      syriacVocalization === 'eastern'
-                        ? result.eastern || result.western || result.syriac
-                        : result.western || result.eastern || result.syriac,
-                      // The string is already in the target vocalization style —
-                      // only strip vowels if needed, don't re-convert
-                      { showVowels }
-                    )}
-                  </span>
-                  <span className="text-gray-500 dark:text-gray-400">
-                    (consonantal: {result.syriac})
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
-                  {result.kaylo && (
-                    <div>
-                      <span className="text-gray-500 dark:text-gray-400">Stem: </span>
-                      <span className="font-medium">{result.kaylo}</span>
-                    </div>
-                  )}
-                  {result.tense && (
-                    <div>
-                      <span className="text-gray-500 dark:text-gray-400">Tense: </span>
-                      <span className="font-medium">{result.tense}</span>
-                    </div>
-                  )}
-                  {result.person && (
-                    <div>
-                      <span className="text-gray-500 dark:text-gray-400">Person: </span>
-                      <span className="font-medium">{result.person}</span>
-                    </div>
-                  )}
-                  {result.gender && (
-                    <div>
-                      <span className="text-gray-500 dark:text-gray-400">Gender: </span>
-                      <span className="font-medium">{result.gender}</span>
-                    </div>
-                  )}
-                  {result.number && (
-                    <div>
-                      <span className="text-gray-500 dark:text-gray-400">Number: </span>
-                      <span className="font-medium">{result.number}</span>
-                    </div>
-                  )}
-                  {result.state && (
-                    <div>
-                      <span className="text-gray-500 dark:text-gray-400">State: </span>
-                      <span className="font-medium">{result.state}</span>
-                    </div>
-                  )}
-                </div>
-
-                {result.glosses && Object.keys(result.glosses).length > 0 && (
-                  <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
-                    <span className="text-gray-500 dark:text-gray-400">Glosses: </span>
-                    {Object.entries(result.glosses).map(([lang, gloss]) => (
-                      <span key={lang} className="font-medium">
-                        {gloss} ({lang})
-                      </span>
-                    ))}
-                  </div>
+                result={result}
+                idx={idx}
+                fontClass={currentLang?.script === 'syriac' ? 'font-syriac' : 'font-hebrew'}
+                vocalized={formatSyriacText(
+                  syriacVocalization === 'eastern'
+                    ? result.eastern || result.western || result.syriac
+                    : result.western || result.eastern || result.syriac,
+                  { showVowels }
                 )}
-              </div>
+              />
             ))}
           </div>
         </div>
@@ -312,6 +254,127 @@ export function StepByStepView() {
           direction={currentLang?.direction || 'rtl'}
         />
       )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// SEDRA result card with expandable step-by-step breakdown
+// ---------------------------------------------------------------------------
+function SedraResultCard({
+  result,
+  idx,
+  fontClass,
+  vocalized,
+}: {
+  result: SedraWord;
+  idx: number;
+  fontClass: string;
+  vocalized: string;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const steps = useMemo(() => buildSedraSteps(result), [result]);
+  const gloss = getGloss(result);
+
+  return (
+    <div className="bg-white dark:bg-gray-800 rounded-lg border border-purple-200 dark:border-purple-700 overflow-hidden">
+      {/* Header row */}
+      <div className="p-4">
+        <div className="flex items-center gap-4 mb-3">
+          <span className="text-xs font-medium text-purple-500 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/40 px-2 py-0.5 rounded">
+            Parse {idx + 1}
+          </span>
+          <span className={`text-xl ${fontClass}`} dir="rtl">
+            {vocalized}
+          </span>
+          {gloss && (
+            <span className="text-gray-500 dark:text-gray-400 text-sm">"{gloss}"</span>
+          )}
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
+          {result.kaylo && (
+            <div><span className="text-gray-500 dark:text-gray-400">Stem: </span><span className="font-medium">{result.kaylo}</span></div>
+          )}
+          {result.tense && (
+            <div><span className="text-gray-500 dark:text-gray-400">Tense: </span><span className="font-medium">{result.tense}</span></div>
+          )}
+          {result.person && (
+            <div><span className="text-gray-500 dark:text-gray-400">Person: </span><span className="font-medium">{result.person}</span></div>
+          )}
+          {result.gender && (
+            <div><span className="text-gray-500 dark:text-gray-400">Gender: </span><span className="font-medium">{result.gender}</span></div>
+          )}
+          {result.number && (
+            <div><span className="text-gray-500 dark:text-gray-400">Number: </span><span className="font-medium">{result.number}</span></div>
+          )}
+          {result.state && (
+            <div><span className="text-gray-500 dark:text-gray-400">State: </span><span className="font-medium">{result.state}</span></div>
+          )}
+        </div>
+      </div>
+
+      {/* Expandable step breakdown */}
+      {steps.length > 0 && (
+        <>
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="w-full px-4 py-2 text-sm text-left bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 border-t border-purple-200 dark:border-purple-700 text-purple-700 dark:text-purple-300 transition-colors flex items-center justify-between"
+          >
+            <span>Morphological breakdown</span>
+            <span>{expanded ? '−' : '+'}</span>
+          </button>
+
+          {expanded && (
+            <div className="divide-y divide-purple-100 dark:divide-purple-800">
+              {steps.map((step) => (
+                <MorphStep
+                  key={step.stepNumber}
+                  step={step}
+                  input={result.syriac}
+                  fontClass={fontClass}
+                />
+              ))}
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+function MorphStep({
+  step,
+  input,
+  fontClass,
+}: {
+  step: ParseStep;
+  input: string;
+  fontClass: string;
+}) {
+  const labelColors: Record<string, string> = {
+    sedra_root: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300',
+    sedra_kaylo: 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300',
+    sedra_png: 'bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300',
+  };
+  const color = labelColors[step.rule.id] ?? 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300';
+
+  return (
+    <div className="px-4 py-3 flex items-start gap-3">
+      <span className={`flex-shrink-0 text-xs font-medium px-2 py-0.5 rounded mt-0.5 ${color}`}>
+        {step.stepNumber}
+      </span>
+      <div className="flex-1 min-w-0">
+        <div className="text-sm text-gray-700 dark:text-gray-300">{step.explanation}</div>
+        {step.highlights.length > 0 && (
+          <div className={`mt-1 text-lg ${fontClass}`} dir="rtl">
+            <HighlightedForm form={input} highlights={step.highlights} showLabels={true} />
+          </div>
+        )}
+      </div>
+      <div className="flex-shrink-0 text-xs text-gray-400 dark:text-gray-500 text-right mt-0.5">
+        {conclusionToString(step.cumulativeConclusion)}
+      </div>
     </div>
   );
 }
