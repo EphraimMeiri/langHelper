@@ -48,138 +48,131 @@ export function StepByStepView() {
     );
   }
 
-  const steps = currentResult.steps;
-  const activeStep = steps[currentStep];
+  // Rule-based steps only (exclude the opaque sedra_lookup step — results are shown below)
+  const ruleSteps = currentResult.steps.filter(s => s.rule.id !== 'sedra_lookup');
+  const activeStep = ruleSteps[currentStep];
 
   // Cumulative highlights up to current step
-  const cumulativeHighlights = steps
+  const cumulativeHighlights = ruleSteps
     .slice(0, currentStep + 1)
     .flatMap(s => s.highlights);
 
+  const hasSedra = currentResult.sedraResults && currentResult.sedraResults.length > 0;
+  const hasRuleSteps = ruleSteps.length > 0;
+
   return (
     <div className="space-y-6">
-      {/* Form display with highlights */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 text-center">
-        <div className="mb-4">
-          <HighlightedForm
-            form={currentResult.input}
-            highlights={cumulativeHighlights}
-            showLabels={true}
-          />
-        </div>
-
-        {/* Current conclusion */}
-        {activeStep && (
-          <div className="text-lg text-gray-700 dark:text-gray-300 mt-6">
-            {conclusionToString(activeStep.cumulativeConclusion)}
-          </div>
-        )}
-      </div>
-
-      {/* Step controls */}
-      <div className="flex items-center justify-center gap-4">
-        <button
-          onClick={prevStep}
-          disabled={currentStep === 0}
-          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-        >
-          ← Previous
-        </button>
-
-        <span className="text-gray-600 dark:text-gray-400">
-          Step {currentStep + 1} of {steps.length}
-        </span>
-
-        <button
-          onClick={nextStep}
-          disabled={currentStep >= steps.length - 1}
-          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-        >
-          Next →
-        </button>
-
-        <button
-          onClick={() => setAutoPlay(!autoPlay)}
-          className={`px-4 py-2 rounded-lg transition-colors ${autoPlay
-              ? 'bg-red-500 text-white hover:bg-red-600'
-              : 'bg-green-500 text-white hover:bg-green-600'
-            }`}
-        >
-          {autoPlay ? 'Stop' : 'Auto Play'}
-        </button>
-      </div>
-
-      {/* Step list */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow divide-y divide-gray-200 dark:divide-gray-700">
-        {steps.map((step, idx) => (
-          <div
-            key={idx}
-            onClick={() => setCurrentStep(idx)}
-            className={`p-4 cursor-pointer transition-colors ${idx === currentStep
-                ? 'bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500'
-                : idx < currentStep
-                  ? 'bg-green-50/50 dark:bg-green-900/20'
-                  : 'hover:bg-gray-50 dark:hover:bg-gray-700'
-              }`}
-          >
-            <div className="flex items-start gap-4">
-              <div
-                className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${idx < currentStep
-                    ? 'bg-green-500 text-white'
-                    : idx === currentStep
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300'
-                  }`}
-              >
-                {idx < currentStep ? '✓' : idx + 1}
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <div className="font-medium text-gray-900 dark:text-white">
-                  {step.rule.id === 'sedra_lookup' ? (
-                    <span className="text-purple-600 dark:text-purple-400">SEDRA API</span>
-                  ) : step.rule.id.startsWith('table_match') ? (
-                    <span className="text-green-600 dark:text-green-400">Table Match</span>
-                  ) : (
-                    <span>Rule: {step.rule.id}</span>
-                  )}
-                </div>
-
-                <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  {step.explanation}
-                </div>
-
-                {step.matched && step.highlights.length > 0 && (
-                  <div className="mt-2">
-                    <span
-                      className={`text-lg ${currentLang?.script === 'syriac' ? 'font-syriac' : 'font-hebrew'
-                        }`}
-                      dir={currentLang?.direction || 'rtl'}
-                    >
-                      <HighlightedForm
-                        form={currentResult.input}
-                        highlights={step.highlights}
-                      />
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              <div className="flex-shrink-0 text-right">
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  {conclusionToString(step.cumulativeConclusion) || '—'}
-                </div>
-              </div>
+      {/* Form display — only shown when there are rule steps to navigate */}
+      {hasRuleSteps && (
+        <>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 text-center">
+            <div className="mb-4">
+              <HighlightedForm
+                form={currentResult.input}
+                highlights={cumulativeHighlights}
+                showLabels={true}
+              />
             </div>
+            {activeStep && (
+              <div className="text-lg text-gray-700 dark:text-gray-300 mt-6">
+                {conclusionToString(activeStep.cumulativeConclusion)}
+              </div>
+            )}
           </div>
-        ))}
 
-        {steps.length === 0 && (
-          <div className="p-8 text-center text-gray-500 dark:text-gray-400">
-            No parsing steps available
+          {/* Step controls */}
+          <div className="flex items-center justify-center gap-4">
+            <button
+              onClick={prevStep}
+              disabled={currentStep === 0}
+              className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              ← Previous
+            </button>
+            <span className="text-gray-600 dark:text-gray-400">
+              Step {currentStep + 1} of {ruleSteps.length}
+            </span>
+            <button
+              onClick={nextStep}
+              disabled={currentStep >= ruleSteps.length - 1}
+              className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              Next →
+            </button>
+            <button
+              onClick={() => setAutoPlay(!autoPlay)}
+              className={`px-4 py-2 rounded-lg transition-colors ${autoPlay
+                ? 'bg-red-500 text-white hover:bg-red-600'
+                : 'bg-green-500 text-white hover:bg-green-600'
+              }`}
+            >
+              {autoPlay ? 'Stop' : 'Auto Play'}
+            </button>
           </div>
-        )}
-      </div>
+
+          {/* Step list */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow divide-y divide-gray-200 dark:divide-gray-700">
+            {ruleSteps.map((step, idx) => (
+              <div
+                key={idx}
+                onClick={() => setCurrentStep(idx)}
+                className={`p-4 cursor-pointer transition-colors ${idx === currentStep
+                  ? 'bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500'
+                  : idx < currentStep
+                    ? 'bg-green-50/50 dark:bg-green-900/20'
+                    : 'hover:bg-gray-50 dark:hover:bg-gray-700'
+                }`}
+              >
+                <div className="flex items-start gap-4">
+                  <div
+                    className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${idx < currentStep
+                      ? 'bg-green-500 text-white'
+                      : idx === currentStep
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300'
+                    }`}
+                  >
+                    {idx < currentStep ? '✓' : idx + 1}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium text-gray-900 dark:text-white">
+                      {step.rule.id.startsWith('table_match') ? (
+                        <span className="text-green-600 dark:text-green-400">Table Match</span>
+                      ) : (
+                        <span>Rule: {step.rule.id}</span>
+                      )}
+                    </div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                      {step.explanation}
+                    </div>
+                    {step.matched && step.highlights.length > 0 && (
+                      <div className="mt-2">
+                        <span
+                          className={`text-lg ${currentLang?.script === 'syriac' ? 'font-syriac' : 'font-hebrew'}`}
+                          dir={currentLang?.direction || 'rtl'}
+                        >
+                          <HighlightedForm form={currentResult.input} highlights={step.highlights} />
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex-shrink-0 text-right">
+                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                      {conclusionToString(step.cumulativeConclusion) || '—'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {!hasRuleSteps && !hasSedra && (
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-8 text-center text-gray-500 dark:text-gray-400">
+          No parsing steps available
+        </div>
+      )}
 
       {/* SEDRA results section */}
       {currentResult.sedraResults && currentResult.sedraResults.length > 0 && (
