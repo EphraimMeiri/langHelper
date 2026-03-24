@@ -3,7 +3,7 @@ import { OnScreenKeyboard } from './OnScreenKeyboard.tsx';
 import { TransliterationHelp } from './TransliterationHelp.tsx';
 import { transliterateWithMappings } from '../../utils/transliteration.ts';
 import { useTransliterationStore } from '../../stores/transliterationStore.ts';
-import { isHebrewScript, hebrewToCAL, calToSyriac } from '../../utils/calTransliteration.ts';
+import { isHebrewScript, hebrewToCAL, calToSyriac, hebrewNikudToSyriac } from '../../utils/calTransliteration.ts';
 import type { ScriptType, TextDirection } from '../../types/language.ts';
 
 interface ScriptInputProps {
@@ -105,8 +105,13 @@ export function ScriptInput({
 
       // Convert Hebrew → Syriac when typing Hebrew into a Syriac input
       if (script === 'syriac' && isHebrewScript(addedText)) {
-        const converted = calToSyriac(hebrewToCAL(addedText));
-        if (converted) {
+        // Try nikud (vowel diacritic) mapping first — hebrewNikudToSyriac returns
+        // a string (possibly '') if it's a known nikud, or null if not a nikud.
+        const nikud = hebrewNikudToSyriac(addedText);
+        const isKnown = nikud !== null;
+        const converted = isKnown ? nikud : calToSyriac(hebrewToCAL(addedText));
+        // Only replace if we have a known mapping (consonant or nikud, even if output is '')
+        if (isKnown || converted) {
           const before = newValue.slice(0, addedStart);
           const after = newValue.slice(selStart);
           const finalValue = before + converted + after;

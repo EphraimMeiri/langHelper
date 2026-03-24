@@ -64,6 +64,24 @@ const CAL_TO_HEBREW: [string, string][] = [
   ['t', 'ת'],
 ];
 
+// Hebrew nikud → Syriac vowel diacritics (for Hebrew keyboard → Syriac input conversion)
+// Mapped by closest phonetic equivalent
+export const HEBREW_NIKUD_TO_SYRIAC: [string, string][] = [
+  ['\u05B7', '\u0730'],  // Patah (a)      → Pthaha below ܰ
+  ['\u05B8', '\u0732'],  // Qamats (a/o)   → Pthaha above ܲ
+  ['\u05B6', '\u0736'],  // Segol (e)      → Rbasa below ܶ
+  ['\u05B5', '\u0736'],  // Tsere (e)      → Rbasa below ܶ
+  ['\u05B4', '\u073A'],  // Hiriq (i)      → Hbasa below ܺ
+  ['\u05B9', '\u0743'],  // Holam (o)      → Zqapha below ܳ (closest to o)
+  ['\u05BA', '\u0743'],  // Holam waw      → Zqapha below ܳ
+  ['\u05BB', '\u073D'],  // Qubuts (u)     → Esasa below ܽ
+  ['\u05BC', ''],        // Dagesh         → drop (no Syriac equivalent)
+  ['\u05B0', '\u0747'],  // Shva           → Rbakhakha ܷ (reduced vowel)
+  ['\u05B1', '\u0736'],  // Hataf segol    → Rbasa ܶ
+  ['\u05B2', '\u0730'],  // Hataf patah    → Pthaha ܰ
+  ['\u05B3', '\u0743'],  // Hataf qamats   → Zqapha ܳ
+];
+
 // Syriac → CAL ASCII (reverse mapping for search normalization)
 const SYRIAC_TO_CAL: [string, string][] = [
   ['ܐ', ')'],
@@ -180,6 +198,13 @@ export function syriacToCAL(syriac: string): string {
 /** Convert Hebrew script to CAL ASCII (for search normalization) */
 export function hebrewToCAL(hebrew: string): string {
   return transliterate(hebrew, hebrewToCalMap);
+}
+
+/** Convert a Hebrew nikud (vowel diacritic) to its Syriac equivalent, or null if none */
+export function hebrewNikudToSyriac(char: string): string | null {
+  const mapping = HEBREW_NIKUD_TO_SYRIAC.find(([heb]) => heb === char);
+  if (!mapping) return null;
+  return mapping[1]; // may be '' for dagesh (intentional drop)
 }
 
 /** Detect if a string is primarily Syriac script */
