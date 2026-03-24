@@ -1,12 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import type { ScriptType } from '../../types/language.ts';
-import {
-  SYRIAC_CONSONANT_MAP, SYRIAC_VOWEL_MAP,
-  HEBREW_CONSONANT_MAP, HEBREW_VOWEL_MAP,
-} from '../../utils/transliteration.ts';
+import { SYRIAC_CONSONANT_MAP } from '../../utils/transliteration.ts';
 import { syriacToCAL, calToHebrew, HEBREW_NIKUD_TO_SYRIAC } from '../../utils/calTransliteration.ts';
 import { convertSyriacVowelStyle } from '../../utils/syriacText.ts';
 import { useSettingsStore } from '../../stores/settingsStore.ts';
+import { useTransliterationStore } from '../../stores/transliterationStore.ts';
+import { KeyRemapDialog } from './KeyRemapDialog.tsx';
 
 interface OnScreenKeyboardProps {
   script: ScriptType;
@@ -139,6 +138,13 @@ function getLayout(script: ScriptType): KeyboardLayout {
   }
 }
 
+interface RemapTarget {
+  char: string;
+  keyName: string;
+  keyType: 'consonants' | 'vowels';
+  anchorRect: DOMRect;
+}
+
 export function OnScreenKeyboard({
   script,
   onKeyPress,
@@ -146,9 +152,11 @@ export function OnScreenKeyboard({
   className = '',
 }: OnScreenKeyboardProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [remapTarget, setRemapTarget] = useState<RemapTarget | null>(null);
   const layout = getLayout(script);
   const fontClass = script === 'syriac' ? 'font-syriac' : 'font-hebrew';
   const syriacVocalization = useSettingsStore((s) => s.syriacVocalization);
+  const { getMappings } = useTransliterationStore();
 
   // When clicking a vowel key, insert the correct codepoint for current vocalization
   const handleVowelPress = (char: string) => {
@@ -156,17 +164,26 @@ export function OnScreenKeyboard({
     onKeyPress(convertSyriacVowelStyle(char, syriacVocalization));
   };
 
-  // Build char → latin shortcut map from transliteration mappings
+  // Build char → latin shortcut map from store (reflects custom mappings)
   const shortcutMap = useMemo(() => {
-    const maps = script === 'syriac'
-      ? [...SYRIAC_CONSONANT_MAP, ...SYRIAC_VOWEL_MAP]
-      : [...HEBREW_CONSONANT_MAP, ...HEBREW_VOWEL_MAP];
+    const { consonants, vowels } = getMappings(script);
     const m = new Map<string, string>();
-    for (const { char, latin } of maps) m.set(char, latin);
+    for (const { char, latin } of [...consonants, ...vowels]) m.set(char, latin);
     return m;
-  }, [script]);
+  }, [getMappings, script]);
+
+  // Build char → hebrew shortcut map from store
+  const hebrewShortcutMap = useMemo(() => {
+    const { consonants, vowels } = getMappings(script);
+    const m = new Map<string, string>();
+    for (const { char, hebrewShortcut } of [...consonants, ...vowels]) {
+      if (hebrewShortcut) m.set(char, hebrewShortcut);
+    }
+    return m;
+  }, [getMappings, script]);
 
   // For Syriac keys: build char → Hebrew equivalent for the corner label
+  // Uses custom hebrewShortcut if set, otherwise falls back to CAL-derived equivalent
   const hebrewEquivMap = useMemo(() => {
     if (script !== 'syriac') return new Map<string, string>();
     const m = new Map<string, string>();
@@ -179,8 +196,23 @@ export function OnScreenKeyboard({
     for (const [nikud, syriac] of HEBREW_NIKUD_TO_SYRIAC) {
       if (syriac && !m.has(syriac)) m.set(syriac, nikud);
     }
+    // Override with custom hebrewShortcuts
+    for (const [char, shortcut] of hebrewShortcutMap) {
+      m.set(char, shortcut);
+    }
     return m;
-  }, [script]);
+  }, [script, hebrewShortcutMap]);
+
+  const handleContextMenu = useCallback((
+    e: React.MouseEvent,
+    char: string,
+    keyName: string,
+    keyType: 'consonants' | 'vowels',
+  ) => {
+    e.preventDefault();
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    setRemapTarget({ char, keyName, keyType, anchorRect: rect });
+  }, []);
 
   if (isCollapsed) {
     return (
@@ -227,7 +259,8 @@ export function OnScreenKeyboard({
                 <button
                   key={key.char}
                   onClick={() => onKeyPress(key.char)}
-                  title={shortcut ? `${key.name} — type "${shortcut}"` : key.name}
+                  onContextMenu={(e) => handleContextMenu(e, key.char, key.name, 'consonants')}
+                  title={shortcut ? `${key.name} — type "${shortcut}" (right-click to remap)` : `${key.name} (right-click to remap)`}
                   className={`relative w-9 h-9 text-lg ${fontClass} bg-white dark:bg-gray-700 rounded shadow-sm hover:bg-blue-50 dark:hover:bg-blue-900 hover:shadow transition-all active:scale-95`}
                 >
                   {key.char}
@@ -262,7 +295,8 @@ export function OnScreenKeyboard({
                 <button
                   key={key.char + key.name}
                   onClick={() => handleVowelPress(key.char)}
-                  title={shortcut ? `${key.name} — type "${shortcut}"` : key.name}
+                  onContextMenu={(e) => handleContextMenu(e, key.char, key.name, 'vowels')}
+                  title={shortcut ? `${key.name} — type "${shortcut}" (right-click to remap)` : `${key.name} (right-click to remap)`}
                   className={`relative w-9 h-9 text-lg ${fontClass} bg-orange-50 dark:bg-orange-900/30 rounded shadow-sm hover:bg-orange-100 dark:hover:bg-orange-800/50 hover:shadow transition-all active:scale-95`}
                 >
                   ◌{displayChar}
@@ -282,6 +316,18 @@ export function OnScreenKeyboard({
           </div>
         ))}
       </div>
+
+      {/* Remap dialog */}
+      {remapTarget && (
+        <KeyRemapDialog
+          char={remapTarget.char}
+          keyName={remapTarget.keyName}
+          script={script}
+          keyType={remapTarget.keyType}
+          anchorRect={remapTarget.anchorRect}
+          onClose={() => setRemapTarget(null)}
+        />
+      )}
     </div>
   );
 }

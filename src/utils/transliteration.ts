@@ -6,6 +6,7 @@ export interface TranslitMapping {
   latin: string;
   char: string;
   name: string;
+  hebrewShortcut?: string; // optional Hebrew character shortcut override
 }
 
 // Syriac consonants - using common academic transliteration

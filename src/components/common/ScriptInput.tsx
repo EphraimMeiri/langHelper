@@ -44,6 +44,17 @@ export function ScriptInput({
   // Get custom mappings from store
   const { getMappings } = useTransliterationStore();
   const mappings = useMemo(() => getMappings(script), [getMappings, script]);
+
+  // Build Hebrew shortcut → Syriac char map from custom mappings
+  const hebrewShortcutToSyriac = useMemo(() => {
+    if (script !== 'syriac') return new Map<string, string>();
+    const { consonants, vowels } = getMappings('syriac');
+    const m = new Map<string, string>();
+    for (const { char, hebrewShortcut } of [...consonants, ...vowels]) {
+      if (hebrewShortcut) m.set(hebrewShortcut, char);
+    }
+    return m;
+  }, [getMappings, script]);
   const syriacVocalization = useSettingsStore((s) => s.syriacVocalization);
 
   const fontClass = script === 'syriac' ? 'font-syriac' : 'font-hebrew';
@@ -108,6 +119,24 @@ export function ScriptInput({
 
       // Convert Hebrew → Syriac when typing Hebrew into a Syriac input
       if (script === 'syriac' && isHebrewScript(addedText)) {
+        // Check custom hebrewShortcut overrides first
+        if (hebrewShortcutToSyriac.has(addedText)) {
+          const mapped = hebrewShortcutToSyriac.get(addedText)!;
+          const before = newValue.slice(0, addedStart);
+          const after = newValue.slice(selStart);
+          const finalValue = before + mapped + after;
+          onChange(finalValue);
+          const newCursorPos = addedStart + mapped.length;
+          setCursorPosition(newCursorPos);
+          lastValueRef.current = finalValue;
+          requestAnimationFrame(() => {
+            if (inputRef.current) {
+              inputRef.current.setSelectionRange(newCursorPos, newCursorPos);
+            }
+          });
+          return;
+        }
+
         // Try nikud (vowel diacritic) mapping first — hebrewNikudToSyriac returns
         // a string (possibly '') if it's a known nikud, or null if not a nikud.
         // Nikud map outputs western codepoints; convert to eastern if needed.
