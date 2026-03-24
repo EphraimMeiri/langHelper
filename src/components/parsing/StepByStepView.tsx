@@ -274,7 +274,16 @@ function SedraResultCard({
 }) {
   const [expanded, setExpanded] = useState(false);
   const steps = useMemo(() => buildSedraSteps(result), [result]);
-  const gloss = getGloss(result);
+  const engGloss = getGloss(result);
+
+  // Build multilingual gloss rows from result.glosses
+  const glossRows = useMemo(() => {
+    if (!result.glosses) return [];
+    return Object.entries(result.glosses).map(([lang, val]) => ({
+      lang,
+      text: Array.isArray(val) ? val.join(', ') : val,
+    }));
+  }, [result.glosses]);
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg border border-purple-200 dark:border-purple-700 overflow-hidden">
@@ -287,8 +296,8 @@ function SedraResultCard({
           <span className={`text-xl ${fontClass}`} dir="rtl">
             {vocalized}
           </span>
-          {gloss && (
-            <span className="text-gray-500 dark:text-gray-400 text-sm">"{gloss}"</span>
+          {engGloss && (
+            <span className="text-gray-500 dark:text-gray-400 text-sm">"{engGloss}"</span>
           )}
         </div>
 
@@ -312,6 +321,19 @@ function SedraResultCard({
             <div><span className="text-gray-500 dark:text-gray-400">State: </span><span className="font-medium">{result.state}</span></div>
           )}
         </div>
+        {/* Multilingual glosses table */}
+        {glossRows.length > 0 && (
+          <table className="mt-3 text-sm w-full">
+            <tbody>
+              {glossRows.map(({ lang, text }) => (
+                <tr key={lang} className="border-t border-gray-100 dark:border-gray-700">
+                  <td className="pr-3 py-1 text-gray-400 dark:text-gray-500 w-10 align-top">{lang}</td>
+                  <td className="py-1 text-gray-700 dark:text-gray-300">{text}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
 
       {/* Expandable step breakdown */}

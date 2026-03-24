@@ -1,5 +1,9 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import type { ScriptType } from '../../types/language.ts';
+import {
+  SYRIAC_CONSONANT_MAP, SYRIAC_VOWEL_MAP,
+  HEBREW_CONSONANT_MAP, HEBREW_VOWEL_MAP,
+} from '../../utils/transliteration.ts';
 
 interface OnScreenKeyboardProps {
   script: ScriptType;
@@ -154,6 +158,16 @@ export function OnScreenKeyboard({
   const layout = getLayout(script);
   const fontClass = script === 'syriac' ? 'font-syriac' : 'font-hebrew';
 
+  // Build char → latin shortcut map from transliteration mappings
+  const shortcutMap = useMemo(() => {
+    const maps = script === 'syriac'
+      ? [...SYRIAC_CONSONANT_MAP, ...SYRIAC_VOWEL_MAP]
+      : [...HEBREW_CONSONANT_MAP, ...HEBREW_VOWEL_MAP];
+    const m = new Map<string, string>();
+    for (const { char, latin } of maps) m.set(char, latin);
+    return m;
+  }, [script]);
+
   if (isCollapsed) {
     return (
       <button
@@ -192,16 +206,24 @@ export function OnScreenKeyboard({
       <div className="space-y-1 mb-2" dir="rtl">
         {layout.letters.map((row, rowIdx) => (
           <div key={`letters-${rowIdx}`} className="flex gap-1 justify-center flex-wrap">
-            {row.map((key) => (
-              <button
-                key={key.char}
-                onClick={() => onKeyPress(key.char)}
-                title={key.name}
-                className={`w-9 h-9 text-lg ${fontClass} bg-white dark:bg-gray-700 rounded shadow-sm hover:bg-blue-50 dark:hover:bg-blue-900 hover:shadow transition-all active:scale-95`}
-              >
-                {key.char}
-              </button>
-            ))}
+            {row.map((key) => {
+              const shortcut = shortcutMap.get(key.char);
+              return (
+                <button
+                  key={key.char}
+                  onClick={() => onKeyPress(key.char)}
+                  title={shortcut ? `${key.name} — type "${shortcut}"` : key.name}
+                  className={`relative w-9 h-9 text-lg ${fontClass} bg-white dark:bg-gray-700 rounded shadow-sm hover:bg-blue-50 dark:hover:bg-blue-900 hover:shadow transition-all active:scale-95`}
+                >
+                  {key.char}
+                  {shortcut && (
+                    <span className="absolute bottom-0 right-0.5 text-[8px] text-gray-400 dark:text-gray-500 font-mono leading-none">
+                      {shortcut}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         ))}
       </div>
@@ -210,16 +232,24 @@ export function OnScreenKeyboard({
       <div className="space-y-1 border-t border-gray-200 dark:border-gray-700 pt-2">
         {layout.vowels.map((row, rowIdx) => (
           <div key={`vowels-${rowIdx}`} className="flex gap-1 justify-center flex-wrap">
-            {row.map((key) => (
-              <button
-                key={key.char + key.name}
-                onClick={() => onKeyPress(key.char)}
-                title={key.name}
-                className={`w-9 h-9 text-lg ${fontClass} bg-orange-50 dark:bg-orange-900/30 rounded shadow-sm hover:bg-orange-100 dark:hover:bg-orange-800/50 hover:shadow transition-all active:scale-95`}
-              >
-                ◌{key.char}
-              </button>
-            ))}
+            {row.map((key) => {
+              const shortcut = shortcutMap.get(key.char);
+              return (
+                <button
+                  key={key.char + key.name}
+                  onClick={() => onKeyPress(key.char)}
+                  title={shortcut ? `${key.name} — type "${shortcut}"` : key.name}
+                  className={`relative w-9 h-9 text-lg ${fontClass} bg-orange-50 dark:bg-orange-900/30 rounded shadow-sm hover:bg-orange-100 dark:hover:bg-orange-800/50 hover:shadow transition-all active:scale-95`}
+                >
+                  ◌{key.char}
+                  {shortcut && (
+                    <span className="absolute bottom-0 right-0.5 text-[8px] text-gray-400 dark:text-gray-500 font-mono leading-none">
+                      {shortcut}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         ))}
       </div>
