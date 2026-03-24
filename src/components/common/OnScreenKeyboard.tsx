@@ -4,7 +4,7 @@ import {
   SYRIAC_CONSONANT_MAP, SYRIAC_VOWEL_MAP,
   HEBREW_CONSONANT_MAP, HEBREW_VOWEL_MAP,
 } from '../../utils/transliteration.ts';
-import { syriacToCAL, calToHebrew } from '../../utils/calTransliteration.ts';
+import { syriacToCAL, calToHebrew, HEBREW_NIKUD_TO_SYRIAC } from '../../utils/calTransliteration.ts';
 
 interface OnScreenKeyboardProps {
   script: ScriptType;
@@ -173,9 +173,14 @@ export function OnScreenKeyboard({
   const hebrewEquivMap = useMemo(() => {
     if (script !== 'syriac') return new Map<string, string>();
     const m = new Map<string, string>();
+    // Consonants: via CAL transliteration
     for (const { char } of SYRIAC_CONSONANT_MAP) {
       const heb = calToHebrew(syriacToCAL(char));
       if (heb) m.set(char, heb);
+    }
+    // Vowels: invert HEBREW_NIKUD_TO_SYRIAC (first match wins)
+    for (const [nikud, syriac] of HEBREW_NIKUD_TO_SYRIAC) {
+      if (syriac && !m.has(syriac)) m.set(syriac, nikud);
     }
     return m;
   }, [script]);
@@ -252,6 +257,7 @@ export function OnScreenKeyboard({
           <div key={`vowels-${rowIdx}`} className="flex gap-1 justify-center flex-wrap">
             {row.map((key) => {
               const shortcut = shortcutMap.get(key.char);
+              const hebrewEquiv = hebrewEquivMap.get(key.char);
               return (
                 <button
                   key={key.char + key.name}
@@ -260,6 +266,11 @@ export function OnScreenKeyboard({
                   className={`relative w-9 h-9 text-lg ${fontClass} bg-orange-50 dark:bg-orange-900/30 rounded shadow-sm hover:bg-orange-100 dark:hover:bg-orange-800/50 hover:shadow transition-all active:scale-95`}
                 >
                   ◌{key.char}
+                  {hebrewEquiv && (
+                    <span className="absolute top-0 left-0.5 text-[8px] font-hebrew text-gray-400 dark:text-gray-500 leading-none">
+                      א{hebrewEquiv}
+                    </span>
+                  )}
                   {shortcut && (
                     <span className="absolute bottom-0 right-0.5 text-[8px] text-gray-400 dark:text-gray-500 font-mono leading-none">
                       {shortcut}
