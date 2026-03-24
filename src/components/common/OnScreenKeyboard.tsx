@@ -5,6 +5,8 @@ import {
   HEBREW_CONSONANT_MAP, HEBREW_VOWEL_MAP,
 } from '../../utils/transliteration.ts';
 import { syriacToCAL, calToHebrew, HEBREW_NIKUD_TO_SYRIAC } from '../../utils/calTransliteration.ts';
+import { convertSyriacVowelStyle } from '../../utils/syriacText.ts';
+import { useSettingsStore } from '../../stores/settingsStore.ts';
 
 interface OnScreenKeyboardProps {
   script: ScriptType;
@@ -158,6 +160,13 @@ export function OnScreenKeyboard({
   const [isCollapsed, setIsCollapsed] = useState(false);
   const layout = getLayout(script);
   const fontClass = script === 'syriac' ? 'font-syriac' : 'font-hebrew';
+  const syriacVocalization = useSettingsStore((s) => s.syriacVocalization);
+
+  // When clicking a vowel key, insert the correct codepoint for current vocalization
+  const handleVowelPress = (char: string) => {
+    if (script !== 'syriac') { onKeyPress(char); return; }
+    onKeyPress(convertSyriacVowelStyle(char, syriacVocalization));
+  };
 
   // Build char → latin shortcut map from transliteration mappings
   const shortcutMap = useMemo(() => {
@@ -261,7 +270,7 @@ export function OnScreenKeyboard({
               return (
                 <button
                   key={key.char + key.name}
-                  onClick={() => onKeyPress(key.char)}
+                  onClick={() => handleVowelPress(key.char)}
                   title={shortcut ? `${key.name} — type "${shortcut}"` : key.name}
                   className={`relative w-9 h-9 text-lg ${fontClass} bg-orange-50 dark:bg-orange-900/30 rounded shadow-sm hover:bg-orange-100 dark:hover:bg-orange-800/50 hover:shadow transition-all active:scale-95`}
                 >
