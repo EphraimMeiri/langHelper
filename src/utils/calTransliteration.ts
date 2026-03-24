@@ -65,21 +65,22 @@ const CAL_TO_HEBREW: [string, string][] = [
 ];
 
 // Hebrew nikud → Syriac vowel diacritics (for Hebrew keyboard → Syriac input conversion)
-// Mapped by closest phonetic equivalent
+// All output western codepoints (U+0730-U+073E range) so that convertSyriacVowelStyle
+// can correctly convert to eastern when the user's vocalization setting requires it.
 export const HEBREW_NIKUD_TO_SYRIAC: [string, string][] = [
-  ['\u05B7', '\u0730'],  // Patah (a)      → Pthaha below ܰ
-  ['\u05B8', '\u0732'],  // Qamats (a/o)   → Pthaha above ܲ
-  ['\u05B6', '\u0736'],  // Segol (e)      → Rbasa below ܶ
-  ['\u05B5', '\u0736'],  // Tsere (e)      → Rbasa below ܶ
-  ['\u05B4', '\u073A'],  // Hiriq (i)      → Hbasa below ܺ
-  ['\u05B9', '\u0743'],  // Holam (o)      → Zqapha below ܳ (closest to o)
-  ['\u05BA', '\u0743'],  // Holam waw      → Zqapha below ܳ
-  ['\u05BB', '\u073D'],  // Qubuts (u)     → Esasa below ܽ
+  ['\u05B7', '\u0730'],  // Patah (a)      → Pthaha above ܰ  (western)
+  ['\u05B8', '\u0730'],  // Qamats (a/o)   → Pthaha above ܰ  (western, closest Syriac equiv)
+  ['\u05B6', '\u0736'],  // Segol (e)      → Rbasa above ܶ   (western)
+  ['\u05B5', '\u0736'],  // Tsere (e)      → Rbasa above ܶ   (western)
+  ['\u05B4', '\u073A'],  // Hiriq (i)      → Hbasa above ܺ   (western)
+  ['\u05B9', '\u0733'],  // Holam (o)      → Zqapha above ܳ  (western)
+  ['\u05BA', '\u0733'],  // Holam waw      → Zqapha above ܳ  (western)
+  ['\u05BB', '\u073D'],  // Qubuts (u)     → Esasa above ܽ   (western)
   ['\u05BC', ''],        // Dagesh         → drop (no Syriac equivalent)
-  ['\u05B0', '\u0747'],  // Shva           → Rbakhakha ܷ (reduced vowel)
-  ['\u05B1', '\u0736'],  // Hataf segol    → Rbasa ܶ
-  ['\u05B2', '\u0730'],  // Hataf patah    → Pthaha ܰ
-  ['\u05B3', '\u0743'],  // Hataf qamats   → Zqapha ܳ
+  ['\u05B0', '\u0737'],  // Shva           → Rbasa below ܷ   (western, reduced vowel)
+  ['\u05B1', '\u0736'],  // Hataf segol    → Rbasa above ܶ   (western)
+  ['\u05B2', '\u0730'],  // Hataf patah    → Pthaha above ܰ  (western)
+  ['\u05B3', '\u0733'],  // Hataf qamats   → Zqapha above ܳ  (western)
 ];
 
 // Syriac → CAL ASCII (reverse mapping for search normalization)
