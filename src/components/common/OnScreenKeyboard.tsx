@@ -267,6 +267,9 @@ export function OnScreenKeyboard({
             {row.map((key) => {
               const shortcut = shortcutMap.get(key.char);
               const hebrewEquiv = hebrewEquivMap.get(key.char);
+              const displayChar = script === 'syriac'
+                ? convertSyriacVowelStyle(key.char, syriacVocalization)
+                : key.char;
               return (
                 <button
                   key={key.char + key.name}
@@ -274,7 +277,7 @@ export function OnScreenKeyboard({
                   title={shortcut ? `${key.name} — type "${shortcut}"` : key.name}
                   className={`relative w-9 h-9 text-lg ${fontClass} bg-orange-50 dark:bg-orange-900/30 rounded shadow-sm hover:bg-orange-100 dark:hover:bg-orange-800/50 hover:shadow transition-all active:scale-95`}
                 >
-                  ◌{key.char}
+                  ◌{displayChar}
                   {hebrewEquiv && (
                     <span className="absolute top-0 left-0.5 text-[8px] font-hebrew text-gray-400 dark:text-gray-500 leading-none">
                       א{hebrewEquiv}
