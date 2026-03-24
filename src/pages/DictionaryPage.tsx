@@ -299,6 +299,24 @@ function PDFDictionaryTab({ currentLang, navRequest, onNavHandled }: PDFDictiona
 
   const maxPage = numPages || currentDict?.pageCount || 9999;
 
+  // Arrow key navigation for PDF page flipping
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!currentDict) return;
+      // Don't intercept when focus is inside an input/textarea
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        setCurrentPage((p) => Math.min(maxPage, p + 1));
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        setCurrentPage((p) => Math.max(1, p - 1));
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentDict, maxPage]);
+
   return (
     <div className="flex-1 overflow-auto p-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
