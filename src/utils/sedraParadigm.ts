@@ -84,10 +84,12 @@ function cleanFormText(text: string): string {
 function extractStemLabel(raw: string): string {
   const cleaned = raw.replace(/\s+/g, ' ').trim();
   const parts = cleaned.split(' ');
+  // Strip leading number+letter code (e.g. "01a")
   if (parts.length > 1 && /^[0-9]+[a-z]$/i.test(parts[0])) {
     parts.shift();
   }
-  return parts.join(' ').trim();
+  // Remove Syriac characters (U+0700–U+074F) — keep only Latin label
+  return parts.join(' ').replace(/[\u0700-\u074F]+/g, '').trim();
 }
 
 export function parseSedraParadigmHtml(html: string, lexemeId: number): SedraParadigm | null {
@@ -105,7 +107,8 @@ export function parseSedraParadigmHtml(html: string, lexemeId: number): SedraPar
   const headerCells = Array.from(table.querySelectorAll('thead tr.tableHeader th'));
   const stems: SedraParadigmStem[] = [];
 
-  for (const cell of headerCells.slice(2)) {
+  // First th has colspan=2 (empty corner cell) — skip just that one
+  for (const cell of headerCells.slice(1)) {
     const syriac = cell.querySelector('.selectableFont')?.textContent?.trim();
     const textContent = cell.textContent || '';
     const label = extractStemLabel(textContent);
