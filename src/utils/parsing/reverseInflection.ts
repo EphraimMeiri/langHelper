@@ -305,7 +305,7 @@ function scoreFormMatch(input: string, paradigmForm: string): { score: number; m
   return { score, matchType };
 }
 
-function rankParadigmMatches(input: string, paradigm: SedraParadigm): RankedParadigmMatch[] {
+export function rankParadigmMatches(input: string, paradigm: SedraParadigm): RankedParadigmMatch[] {
   const inputCons = stripSyriacVowels(input);
   const matches: RankedParadigmMatch[] = [];
 

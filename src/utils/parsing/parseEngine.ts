@@ -10,7 +10,7 @@ import type { VerbTable } from '../../types/verb';
 import { findExactMatches } from './ruleGenerator';
 import { lookupWord, lookupLexeme, fetchLexemeParadigmHtml, mapSedraToConclusion, getGloss, type SedraWord, type SedraLexeme } from '../../services/sedraApi';
 import { parseSedraParadigmHtml, type SedraParadigm } from '../sedraParadigm';
-import { reverseInflectionLookup, type RankedParadigmMatch } from './reverseInflection';
+import { reverseInflectionLookup, rankParadigmMatches, type RankedParadigmMatch } from './reverseInflection';
 
 export interface ParseOptions {
   useSedra: boolean;
@@ -94,6 +94,7 @@ export async function parseForm(
                 const paradigm = parseSedraParadigmHtml(paradigmHtml, primaryResult.lexeme.id);
                 if (paradigm) {
                   result.sedraParadigm = paradigm;
+                  result.rankedParadigmMatches = rankParadigmMatches(input, paradigm);
                 }
               }
             }
