@@ -2,7 +2,7 @@
 // Syriac Electronic Data Research Archive
 // https://sedra.bethmardutho.org/api
 
-import { convertSyriacVowelStyle } from '../utils/syriacText';
+import { convertSyriacVowelStyle, stripSyriacVowels } from '../utils/syriacText';
 
 export interface SedraObjectReference {
   id: number;
@@ -83,16 +83,41 @@ export async function lookupWord(wordOrId: string): Promise<SedraWord[]> {
     const encoded = encodeURIComponent(westernized);
     const response = await fetch(`${SEDRA_BASE_URL}/word/${encoded}.json`);
 
-    if (!response.ok) {
-      if (response.status === 404) {
-        setCache(cacheKey, []);
-        return [];
-      }
+    let result: SedraWord[] = [];
+    if (response.ok) {
+      const data = await response.json();
+      result = Array.isArray(data) ? data : [data];
+    } else if (response.status !== 404) {
       throw new Error(`SEDRA API error: ${response.status}`);
     }
 
-    const data = await response.json();
-    const result = Array.isArray(data) ? data : [data];
+    // If vocalized lookup returned no morphological info, retry with
+    // consonantal form which often returns richer results from SEDRA
+    const consonantal = stripSyriacVowels(wordOrId);
+    const hasInflectionInfo = result.some(w => w.tense || w.kaylo);
+    if (!hasInflectionInfo && consonantal !== westernized) {
+      const consEncoded = encodeURIComponent(consonantal);
+      const consResponse = await fetch(`${SEDRA_BASE_URL}/word/${consEncoded}.json`);
+      if (consResponse.ok) {
+        const consData = await consResponse.json();
+        const consResult: SedraWord[] = Array.isArray(consData) ? consData : [consData];
+        // Merge: prefer results with inflection info, deduplicate by word id
+        const seenIds = new Set(result.map(w => w.word?.id));
+        for (const w of consResult) {
+          if (!seenIds.has(w.word?.id)) {
+            result.push(w);
+            seenIds.add(w.word?.id);
+          }
+        }
+        // Sort: results with inflection info first
+        result.sort((a, b) => {
+          const aHas = (a.tense || a.kaylo) ? 1 : 0;
+          const bHas = (b.tense || b.kaylo) ? 1 : 0;
+          return bHas - aHas;
+        });
+      }
+    }
+
     setCache(cacheKey, result);
     return result;
   } catch (error) {
