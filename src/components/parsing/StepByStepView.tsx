@@ -9,6 +9,7 @@ import { formatSyriacText } from '../../utils/syriacText';
 import { buildSedraSteps } from '../../utils/parsing/sedraSteps';
 import type { SedraWord } from '../../services/sedraApi';
 import { getGloss } from '../../services/sedraApi';
+import type { RankedParadigmMatch } from '../../utils/parsing/reverseInflection';
 
 export function StepByStepView() {
   const {
@@ -63,24 +64,35 @@ export function StepByStepView() {
 
   const hasSedra = currentResult.sedraResults && currentResult.sedraResults.length > 0;
   const hasRuleSteps = ruleSteps.length > 0;
+  const rankedMatches = currentResult.rankedParadigmMatches;
+  const hasRankedMatches = rankedMatches && rankedMatches.length > 0;
 
   return (
     <div className="space-y-6">
-      {/* Form display — only shown when there are rule steps to navigate */}
+      {/* Form display + ranked matches side by side */}
       {hasRuleSteps && (
         <>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 text-center">
-            <div className="mb-4">
-              <HighlightedForm
-                form={currentResult.input}
-                highlights={cumulativeHighlights}
-                showLabels={true}
-              />
-            </div>
-            {activeStep && (
-              <div className="text-lg text-gray-700 dark:text-gray-300 mt-6">
-                {conclusionToString(activeStep.cumulativeConclusion)}
+          <div className={`flex gap-4 ${hasRankedMatches ? 'items-start' : ''}`}>
+            <div className={`bg-white dark:bg-gray-800 rounded-lg shadow p-6 text-center ${hasRankedMatches ? 'flex-1' : 'w-full'}`}>
+              <div className="mb-4">
+                <HighlightedForm
+                  form={currentResult.input}
+                  highlights={cumulativeHighlights}
+                  showLabels={true}
+                />
               </div>
+              {activeStep && (
+                <div className="text-lg text-gray-700 dark:text-gray-300 mt-6">
+                  {conclusionToString(activeStep.cumulativeConclusion)}
+                </div>
+              )}
+            </div>
+
+            {hasRankedMatches && (
+              <RankedMatchesList
+                matches={rankedMatches}
+                fontClass={currentLang?.script === 'syriac' ? 'font-syriac' : 'font-hebrew'}
+              />
             )}
           </div>
 
@@ -258,6 +270,57 @@ export function StepByStepView() {
           direction={currentLang?.direction || 'rtl'}
         />
       )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Ranked paradigm matches — compact list: form | binyan | inflection
+// ---------------------------------------------------------------------------
+function RankedMatchesList({
+  matches,
+  fontClass,
+}: {
+  matches: RankedParadigmMatch[];
+  fontClass: string;
+}) {
+  const { syriacVocalization, showVowels } = useSettingsStore();
+
+  return (
+    <div className="w-72 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+      <div className="px-3 py-2 bg-amber-50 dark:bg-amber-900/30 border-b border-amber-200 dark:border-amber-700">
+        <h4 className="text-sm font-medium text-amber-900 dark:text-amber-200">
+          Candidate Inflections
+        </h4>
+      </div>
+      <div className="divide-y divide-gray-100 dark:divide-gray-700">
+        {matches.map((m, idx) => (
+          <div
+            key={idx}
+            className={`px-3 py-1.5 flex items-center gap-2 text-sm ${
+              idx === 0
+                ? 'bg-amber-50/50 dark:bg-amber-900/20'
+                : ''
+            }`}
+          >
+            <span
+              className={`${fontClass} text-base flex-shrink-0`}
+              dir="rtl"
+            >
+              {formatSyriacText(m.form.form, { showVowels, vowelStyle: syriacVocalization })}
+            </span>
+            <span className="text-gray-500 dark:text-gray-400 truncate">
+              {m.form.stem}
+            </span>
+            <span className="text-gray-600 dark:text-gray-300 truncate">
+              {m.form.tense.replace(/-/g, ' ')} {m.form.png}
+            </span>
+            <span className="ml-auto flex-shrink-0 text-xs text-gray-400 dark:text-gray-500">
+              {Math.round(m.score * 100)}%
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

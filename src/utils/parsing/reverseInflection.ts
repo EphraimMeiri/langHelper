@@ -7,7 +7,7 @@
  */
 
 import type { ParseStep, ParseConclusion, HighlightRange } from '../../types/parsing';
-import { stripSyriacVowels } from '../syriacText';
+import { stripSyriacVowels, convertSyriacVowelStyle } from '../syriacText';
 import {
   lookupWord,
   lookupLexeme,
@@ -17,7 +17,7 @@ import {
   type SedraWord,
   type SedraLexeme,
 } from '../../services/sedraApi';
-import { parseSedraParadigmHtml, type SedraParadigm } from '../sedraParadigm';
+import { parseSedraParadigmHtml, type SedraParadigm, type SedraParadigmForm } from '../sedraParadigm';
 
 // ---------------------------------------------------------------------------
 // Affix definitions
@@ -237,13 +237,89 @@ export function generateCandidateRoots(input: string): CandidateRoot[] {
 // SEDRA confirmation
 // ---------------------------------------------------------------------------
 
+export interface RankedParadigmMatch {
+  form: SedraParadigmForm;
+  score: number; // 0–1, higher is better
+  matchType: 'exact' | 'vowel-close' | 'consonantal';
+}
+
 export interface ReverseInflectionResult {
   candidate: CandidateRoot;
   sedraWords: SedraWord[];
   lexeme: SedraLexeme | null;
   paradigm: SedraParadigm | null;
+  rankedMatches: RankedParadigmMatch[];
   gloss: string | undefined;
   steps: ParseStep[];
+}
+
+/**
+ * Score how well a paradigm form matches the input, considering vowels.
+ * Both strings are normalized to western vocalization for comparison.
+ * Returns 0–1 where 1 = exact match.
+ */
+function scoreFormMatch(input: string, paradigmForm: string): { score: number; matchType: RankedParadigmMatch['matchType'] } {
+  const inputW = convertSyriacVowelStyle(input, 'western');
+  const formW = convertSyriacVowelStyle(paradigmForm, 'western');
+
+  // Exact match (after normalizing vocalization style)
+  if (inputW === formW) {
+    return { score: 1.0, matchType: 'exact' };
+  }
+
+  // Consonantal match is the baseline
+  const inputCons = stripSyriacVowels(input);
+  const formCons = stripSyriacVowels(paradigmForm);
+  if (inputCons !== formCons) {
+    return { score: 0, matchType: 'consonantal' };
+  }
+
+  // Same consonants — score by vowel similarity
+  // Extract vowels in order for each
+  const vowelPattern = /[\u0730-\u074A]/g;
+  const inputVowels = [...inputW].filter(c => vowelPattern.test(c));
+  // Reset lastIndex since we're reusing the regex conceptually
+  const formVowels = [...formW].filter(c => /[\u0730-\u074A]/.test(c));
+
+  if (inputVowels.length === 0 && formVowels.length === 0) {
+    // Both consonantal — treat as exact
+    return { score: 1.0, matchType: 'exact' };
+  }
+
+  if (inputVowels.length === 0 || formVowels.length === 0) {
+    // One has vowels, other doesn't — consonantal match
+    return { score: 0.5, matchType: 'consonantal' };
+  }
+
+  // Count matching vowels in same positions
+  const maxLen = Math.max(inputVowels.length, formVowels.length);
+  let matches = 0;
+  for (let i = 0; i < maxLen; i++) {
+    if (inputVowels[i] === formVowels[i]) matches++;
+  }
+
+  const vowelScore = matches / maxLen;
+  // Scale: consonantal base 0.5, vowel match adds up to 0.5
+  const score = 0.5 + vowelScore * 0.5;
+  const matchType = vowelScore >= 0.8 ? 'vowel-close' : 'consonantal';
+
+  return { score, matchType };
+}
+
+function rankParadigmMatches(input: string, paradigm: SedraParadigm): RankedParadigmMatch[] {
+  const inputCons = stripSyriacVowels(input);
+  const matches: RankedParadigmMatch[] = [];
+
+  for (const form of paradigm.forms) {
+    // Only consider forms with matching consonants
+    if (stripSyriacVowels(form.form) !== inputCons) continue;
+
+    const { score, matchType } = scoreFormMatch(input, form.form);
+    matches.push({ form, score, matchType });
+  }
+
+  matches.sort((a, b) => b.score - a.score);
+  return matches;
 }
 
 export async function reverseInflectionLookup(
@@ -286,17 +362,9 @@ export async function reverseInflectionLookup(
             }
           }
 
-          // Confirm: check if the input form appears in the paradigm
-          const inputCons = stripSyriacVowels(input);
-          let confirmed = false;
-          if (paradigm) {
-            for (const form of paradigm.forms) {
-              if (stripSyriacVowels(form.form) === inputCons) {
-                confirmed = true;
-                break;
-              }
-            }
-          }
+          // Rank paradigm forms by vowel similarity to input
+          const rankedMatches = paradigm ? rankParadigmMatches(input, paradigm) : [];
+          const confirmed = rankedMatches.length > 0;
 
           // Even without paradigm confirmation, a SEDRA hit on the root is useful
           const bestCandidate = matchingCandidates[0];
@@ -308,6 +376,7 @@ export async function reverseInflectionLookup(
             sedraWords,
             lexeme,
             paradigm,
+            rankedMatches,
             gloss,
             steps,
           };

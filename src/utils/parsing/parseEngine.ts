@@ -10,7 +10,7 @@ import type { VerbTable } from '../../types/verb';
 import { findExactMatches } from './ruleGenerator';
 import { lookupWord, lookupLexeme, fetchLexemeParadigmHtml, mapSedraToConclusion, getGloss, type SedraWord, type SedraLexeme } from '../../services/sedraApi';
 import { parseSedraParadigmHtml, type SedraParadigm } from '../sedraParadigm';
-import { reverseInflectionLookup } from './reverseInflection';
+import { reverseInflectionLookup, type RankedParadigmMatch } from './reverseInflection';
 
 export interface ParseOptions {
   useSedra: boolean;
@@ -31,6 +31,7 @@ export interface EnrichedParseResult extends ParseResult {
   sedraParadigm?: SedraParadigm;
   reverseInflectionUsed?: boolean;
   reverseInflectionRoot?: string;
+  rankedParadigmMatches?: RankedParadigmMatch[];
 }
 
 // Main parsing function
@@ -123,6 +124,16 @@ export async function parseForm(
         result.success = true;
         result.reverseInflectionUsed = true;
         result.reverseInflectionRoot = reverseResult.candidate.consonants;
+        result.rankedParadigmMatches = reverseResult.rankedMatches;
+
+        // Use best paradigm match to refine the conclusion
+        if (reverseResult.rankedMatches.length > 0) {
+          const best = reverseResult.rankedMatches[0].form;
+          result.conclusion = mergeConclusions(result.conclusion, {
+            stem: best.stem,
+            tense: best.tense,
+          });
+        }
 
         // Add reverse inflection steps
         for (const step of reverseResult.steps) {
