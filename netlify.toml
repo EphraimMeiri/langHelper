@@ -5,6 +5,13 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# SEDRA API proxy (avoid CORS)
+[[redirects]]
+  from = "/sedra-proxy/*"
+  to = "https://sedra.bethmardutho.org/:splat"
+  status = 200
+  force = true
+
 # SPA: all routes fall through to index.html
 [[redirects]]
   from = "/*"

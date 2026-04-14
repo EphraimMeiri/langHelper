@@ -2,6 +2,8 @@
 // Syriac Electronic Data Research Archive
 // https://sedra.bethmardutho.org/api
 
+import { convertSyriacVowelStyle } from '../utils/syriacText';
+
 export interface SedraObjectReference {
   id: number;
   link: string;
@@ -43,8 +45,8 @@ export interface SedraLexeme {
   kaylo?: string;
 }
 
-const SEDRA_BASE_URL = 'https://sedra.bethmardutho.org/api';
-const SEDRA_LEXEME_BASE_URL = 'https://sedra.bethmardutho.org';
+const SEDRA_BASE_URL = '/sedra-proxy/api';
+const SEDRA_LEXEME_BASE_URL = '/sedra-proxy';
 
 // Simple in-memory cache with TTL (30 minutes)
 const CACHE_TTL = 30 * 60 * 1000;
@@ -76,7 +78,9 @@ export async function lookupWord(wordOrId: string): Promise<SedraWord[]> {
   if (cached) return cached;
 
   try {
-    const encoded = encodeURIComponent(wordOrId);
+    // SEDRA uses western vocalization; convert eastern vowels before lookup
+    const westernized = convertSyriacVowelStyle(wordOrId, 'western');
+    const encoded = encodeURIComponent(westernized);
     const response = await fetch(`${SEDRA_BASE_URL}/word/${encoded}.json`);
 
     if (!response.ok) {
@@ -285,4 +289,4 @@ export function getGloss(word: SedraWord): string | undefined {
 }
 
 // Strip vowels from Syriac text (for consonantal matching)
-export { stripSyriacVowels } from '../utils/syriacText';
+export { stripSyriacVowels, convertSyriacVowelStyle } from '../utils/syriacText';

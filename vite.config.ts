@@ -18,6 +18,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (p) => p.replace(/^\/cal-proxy/, ''),
       },
+      '/sedra-proxy': {
+        target: 'https://sedra.bethmardutho.org',
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/sedra-proxy/, ''),
+      },
     },
   },
 })
