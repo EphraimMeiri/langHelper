@@ -10,6 +10,7 @@ import type { VerbTable } from '../../types/verb';
 import { findExactMatches } from './ruleGenerator';
 import { lookupWord, lookupLexeme, fetchLexemeParadigmHtml, mapSedraToConclusion, getGloss, type SedraWord, type SedraLexeme } from '../../services/sedraApi';
 import { parseSedraParadigmHtml, type SedraParadigm } from '../sedraParadigm';
+import { reverseInflectionLookup } from './reverseInflection';
 
 export interface ParseOptions {
   useSedra: boolean;
@@ -98,6 +99,35 @@ export async function parseForm(
           console.error('Failed to fetch lexeme/paradigm:', e);
         }
       }
+    }
+  }
+
+  // 1.5 Reverse inflection: strip affixes to find root in SEDRA
+  if (opts.useSedra && result.sedraResults?.length === 0) {
+    try {
+      const reverseResult = await reverseInflectionLookup(input);
+      if (reverseResult) {
+        result.sedraResults = reverseResult.sedraWords;
+        result.sedraLexeme = reverseResult.lexeme ?? undefined;
+        result.sedraParadigm = reverseResult.paradigm ?? undefined;
+        result.sedraGloss = reverseResult.gloss;
+
+        // Use the candidate's implied conclusion
+        const implied = reverseResult.candidate.impliedConclusions[0] ?? {};
+        result.conclusion = mergeConclusions(result.conclusion, implied);
+        if (reverseResult.candidate.consonants) {
+          result.conclusion = mergeConclusions(result.conclusion, { root: reverseResult.candidate.consonants });
+        }
+        result.success = true;
+
+        // Add reverse inflection steps
+        for (const step of reverseResult.steps) {
+          step.stepNumber = result.steps.length + step.stepNumber;
+          result.steps.push(step);
+        }
+      }
+    } catch (e) {
+      console.error('Reverse inflection error:', e);
     }
   }
 
