@@ -29,6 +29,8 @@ export interface EnrichedParseResult extends ParseResult {
   sedraGloss?: string;
   sedraLexeme?: SedraLexeme;
   sedraParadigm?: SedraParadigm;
+  reverseInflectionUsed?: boolean;
+  reverseInflectionRoot?: string;
 }
 
 // Main parsing function
@@ -119,6 +121,8 @@ export async function parseForm(
           result.conclusion = mergeConclusions(result.conclusion, { root: reverseResult.candidate.consonants });
         }
         result.success = true;
+        result.reverseInflectionUsed = true;
+        result.reverseInflectionRoot = reverseResult.candidate.consonants;
 
         // Add reverse inflection steps
         for (const step of reverseResult.steps) {

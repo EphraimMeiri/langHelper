@@ -41,15 +41,18 @@ const PNG_MAP: Record<string, string> = {
   P1: '1p',
 };
 
+// Order matters: longer/more specific patterns must come first to avoid
+// e.g. "Ettaphʿal" matching the aphel regex via its "aphʿal" substring.
+// Use .* to handle multi-char transliteration marks like ʿʿ.
 const STEM_LABEL_MAP: Array<{ match: RegExp; key: string }> = [
-  { match: /p.?al/i, key: 'peal' },
-  { match: /pa.?el/i, key: 'pael' },
-  { match: /aph.?el|aph.?al/i, key: 'aphel' },
-  { match: /ethp.?el/i, key: 'ethpeel' },
-  { match: /ethpa.?al/i, key: 'ethpaal' },
-  { match: /ettaph.?al/i, key: 'ettaphal' },
-  { match: /eshtaph.?al/i, key: 'eshtaphal' },
-  { match: /shaph.?el|shaph.?al/i, key: 'shafel' },
+  { match: /eshtaph.*al/i, key: 'eshtaphal' },
+  { match: /ettaph.*al/i, key: 'ettaphal' },
+  { match: /ethpa.*al/i, key: 'ethpaal' },
+  { match: /ethp.*el/i, key: 'ethpeel' },
+  { match: /aph.*el|aph.*al/i, key: 'aphel' },
+  { match: /shaph.*el|shaph.*al/i, key: 'shafel' },
+  { match: /pa.*el/i, key: 'pael' },
+  { match: /p.*al/i, key: 'peal' },
 ];
 
 function normalizeStemKey(label: string): string {

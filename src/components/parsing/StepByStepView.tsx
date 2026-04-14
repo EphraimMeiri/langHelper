@@ -182,7 +182,10 @@ export function StepByStepView() {
       {currentResult.sedraResults && currentResult.sedraResults.length > 0 && (
         <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg shadow p-6">
           <h3 className="text-lg font-medium text-purple-900 dark:text-purple-200 mb-4">
-            SEDRA Database Results
+            {currentResult.reverseInflectionUsed
+              ? <>Root Lexeme <span className={`${currentLang?.script === 'syriac' ? 'font-syriac' : 'font-hebrew'}`} dir="rtl">({currentResult.reverseInflectionRoot})</span></>
+              : 'SEDRA Database Results'
+            }
           </h3>
 
           {currentResult.sedraGloss && (
@@ -200,6 +203,7 @@ export function StepByStepView() {
                 key={idx}
                 result={result}
                 idx={idx}
+                isRootLexeme={currentResult.reverseInflectionUsed}
                 fontClass={currentLang?.script === 'syriac' ? 'font-syriac' : 'font-hebrew'}
                 vocalized={formatSyriacText(
                   syriacVocalization === 'eastern'
@@ -264,11 +268,13 @@ export function StepByStepView() {
 function SedraResultCard({
   result,
   idx,
+  isRootLexeme,
   fontClass,
   vocalized,
 }: {
   result: SedraWord;
   idx: number;
+  isRootLexeme?: boolean;
   fontClass: string;
   vocalized: string;
 }) {
@@ -291,7 +297,7 @@ function SedraResultCard({
       <div className="p-4">
         <div className="flex items-center gap-4 mb-3">
           <span className="text-xs font-medium text-purple-500 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/40 px-2 py-0.5 rounded">
-            Parse {idx + 1}
+            {isRootLexeme ? `Lexeme ${idx + 1}` : `Parse ${idx + 1}`}
           </span>
           <span className={`text-xl ${fontClass}`} dir="rtl">
             {vocalized}
@@ -343,7 +349,7 @@ function SedraResultCard({
             onClick={() => setExpanded(!expanded)}
             className="w-full px-4 py-2 text-sm text-left bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 border-t border-purple-200 dark:border-purple-700 text-purple-700 dark:text-purple-300 transition-colors flex items-center justify-between"
           >
-            <span>Morphological breakdown</span>
+            <span>{isRootLexeme ? 'Citation form breakdown' : 'Morphological breakdown'}</span>
             <span>{expanded ? '−' : '+'}</span>
           </button>
 
