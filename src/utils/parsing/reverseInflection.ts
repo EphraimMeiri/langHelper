@@ -12,7 +12,6 @@ import {
   lookupWord,
   lookupLexeme,
   fetchLexemeParadigmHtml,
-  mapSedraToConclusion,
   getGloss,
   type SedraWord,
   type SedraLexeme,
