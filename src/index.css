@@ -174,11 +174,11 @@ input[type="radio"] {
   @apply px-2 py-1;
 }
 
-/* PDF reader: word-level click targets inside the text layer */
-.pdf-word-layer .react-pdf__Page__textContent .pdf-word {
+/* PDF reader: word-level click targets (PDF text layer + extracted text view) */
+.pdf-word-layer .pdf-word {
   cursor: pointer;
   border-radius: 2px;
 }
-.pdf-word-layer .react-pdf__Page__textContent .pdf-word:hover {
+.pdf-word-layer .pdf-word:hover {
   background-color: rgba(59, 130, 246, 0.35);
 }

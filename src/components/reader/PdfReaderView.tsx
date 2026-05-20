@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
@@ -14,7 +14,22 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 const ZOOM_STEPS = [0.5, 0.75, 1, 1.25, 1.5, 2];
 
-// Escape a string for safe injection into HTML attributes / text
+type ViewMode = 'pdf' | 'text' | 'both';
+
+interface TextItem {
+  str: string;
+  x: number;
+  y: number;
+  height: number;
+  dir?: string;
+}
+
+interface TextLine {
+  y: number;
+  text: string;
+  dir: 'ltr' | 'rtl';
+}
+
 function escapeHtml(s: string): string {
   return s
     .replace(/&/g, '&amp;')
@@ -24,13 +39,41 @@ function escapeHtml(s: string): string {
     .replace(/'/g, '&#39;');
 }
 
-// Wrap each whitespace-separated word in str with a clickable span. Returns HTML.
 function wrapWords(str: string): string {
   if (!str) return str;
-  // Keep whitespace runs as-is, wrap word runs.
   return str.replace(/(\S+)/g, (m) => {
     const safe = escapeHtml(m);
     return `<span class="pdf-word" data-word="${safe}">${safe}</span>`;
+  });
+}
+
+// Group text items into visual lines by Y coordinate (PDF coords: Y up).
+function groupIntoLines(items: TextItem[]): TextLine[] {
+  if (items.length === 0) return [];
+  const sorted = [...items].sort((a, b) => b.y - a.y); // top-down
+  const tol = Math.max(2, (sorted[0]?.height || 10) * 0.5);
+
+  const lines: { y: number; items: TextItem[] }[] = [];
+  for (const it of sorted) {
+    const last = lines[lines.length - 1];
+    if (last && Math.abs(last.y - it.y) <= tol) {
+      last.items.push(it);
+    } else {
+      lines.push({ y: it.y, items: [it] });
+    }
+  }
+
+  return lines.map(({ y, items }) => {
+    const rtlVotes = items.filter((i) => i.dir === 'rtl').length;
+    const dir: 'ltr' | 'rtl' = rtlVotes > items.length / 2 ? 'rtl' : 'ltr';
+    // Sort by X. For RTL we still sort ascending X — the dir attr flips display order.
+    const ordered = [...items].sort((a, b) => a.x - b.x);
+    const text = ordered
+      .map((i) => i.str)
+      .join(' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    return { y, text, dir };
   });
 }
 
@@ -42,7 +85,13 @@ export function PdfReaderView() {
   const [zoomIndex, setZoomIndex] = useState(2);
   const [pdfError, setPdfError] = useState<string | null>(null);
   const [inputValue, setInputValue] = useState('');
+  const [viewMode, setViewMode] = useState<ViewMode>('text');
 
+  // Lines for the current page
+  const [lines, setLines] = useState<TextLine[]>([]);
+  const [textLoading, setTextLoading] = useState(false);
+
+  const pdfDocRef = useRef<{ getPage: (n: number) => Promise<{ getTextContent: () => Promise<{ items: unknown[] }> }>; numPages: number } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const runParse = useParseAction();
   const isLoadingParse = useParsingStore((s) => s.isLoading);
@@ -60,16 +109,57 @@ export function PdfReaderView() {
     setFileName(file.name);
     setPageNum(1);
     setPdfError(null);
+    setLines([]);
+    pdfDocRef.current = null;
     e.target.value = '';
   };
 
-  const handlePageContainerClick = useCallback(
+  // Extract text for the active page whenever it (or the doc) changes.
+  useEffect(() => {
+    let cancelled = false;
+    const pdf = pdfDocRef.current;
+    if (!pdf) return;
+    setTextLoading(true);
+    (async () => {
+      try {
+        const page = await pdf.getPage(pageNum);
+        const content = await page.getTextContent();
+        if (cancelled) return;
+        const items: TextItem[] = [];
+        for (const raw of content.items) {
+          if (!raw || typeof raw !== 'object') continue;
+          const r = raw as { str?: unknown; transform?: unknown; height?: unknown; dir?: unknown };
+          if (typeof r.str !== 'string' || !r.str.trim()) continue;
+          if (!Array.isArray(r.transform) || r.transform.length < 6) continue;
+          items.push({
+            str: r.str,
+            x: Number(r.transform[4]) || 0,
+            y: Number(r.transform[5]) || 0,
+            height: typeof r.height === 'number' ? r.height : 10,
+            dir: typeof r.dir === 'string' ? r.dir : undefined,
+          });
+        }
+        setLines(groupIntoLines(items));
+      } catch (err) {
+        if (!cancelled) {
+          console.error('Text extraction failed', err);
+          setLines([]);
+        }
+      } finally {
+        if (!cancelled) setTextLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [pageNum, pdfUrl]);
+
+  const handleWordClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       const target = e.target as HTMLElement;
       const wordEl = target.closest('.pdf-word') as HTMLElement | null;
       if (!wordEl) return;
       const word = wordEl.getAttribute('data-word') || wordEl.textContent || '';
-      // Strip surrounding punctuation
       const cleaned = word.replace(/^[\p{P}\p{S}]+|[\p{P}\p{S}]+$/gu, '');
       if (!cleaned) return;
       setInputValue(cleaned);
@@ -83,11 +173,14 @@ export function PdfReaderView() {
     []
   );
 
+  const showPdf = viewMode === 'pdf' || viewMode === 'both';
+  const showText = viewMode === 'text' || viewMode === 'both';
+
   return (
     <div className="flex-1 overflow-hidden flex">
-      {/* Left: PDF pane */}
+      {/* Left: PDF + Text panes */}
       <div className="flex-1 flex flex-col overflow-hidden border-r border-gray-200 dark:border-gray-700">
-        {/* PDF toolbar */}
+        {/* Toolbar */}
         <div className="border-b border-gray-200 dark:border-gray-700 px-4 py-2 flex flex-wrap items-center gap-3 bg-white dark:bg-gray-800">
           <input
             ref={fileInputRef}
@@ -103,9 +196,28 @@ export function PdfReaderView() {
             {pdfUrl ? 'Change PDF' : 'Open PDF'}
           </button>
           {fileName && (
-            <span className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[16rem]">
+            <span className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[14rem]">
               {fileName}
             </span>
+          )}
+
+          {/* View mode switch */}
+          {pdfUrl && (
+            <div className="inline-flex rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden ml-2">
+              {(['text', 'both', 'pdf'] as ViewMode[]).map((m) => (
+                <button
+                  key={m}
+                  onClick={() => setViewMode(m)}
+                  className={`px-3 py-1 text-xs capitalize transition-colors ${
+                    viewMode === m
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600'
+                  }`}
+                >
+                  {m}
+                </button>
+              ))}
+            </div>
           )}
 
           {pdfUrl && numPages && (
@@ -139,25 +251,27 @@ export function PdfReaderView() {
                 </button>
               </div>
 
-              <div className="flex items-center gap-1 ml-2">
-                <button
-                  onClick={() => setZoomIndex((i) => Math.max(0, i - 1))}
-                  disabled={zoomIndex <= 0}
-                  className="px-2 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50"
-                >
-                  -
-                </button>
-                <span className="text-xs text-gray-500 dark:text-gray-400 w-12 text-center">
-                  {Math.round(zoom * 100)}%
-                </span>
-                <button
-                  onClick={() => setZoomIndex((i) => Math.min(ZOOM_STEPS.length - 1, i + 1))}
-                  disabled={zoomIndex >= ZOOM_STEPS.length - 1}
-                  className="px-2 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50"
-                >
-                  +
-                </button>
-              </div>
+              {showPdf && (
+                <div className="flex items-center gap-1 ml-2">
+                  <button
+                    onClick={() => setZoomIndex((i) => Math.max(0, i - 1))}
+                    disabled={zoomIndex <= 0}
+                    className="px-2 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50"
+                  >
+                    -
+                  </button>
+                  <span className="text-xs text-gray-500 dark:text-gray-400 w-12 text-center">
+                    {Math.round(zoom * 100)}%
+                  </span>
+                  <button
+                    onClick={() => setZoomIndex((i) => Math.min(ZOOM_STEPS.length - 1, i + 1))}
+                    disabled={zoomIndex >= ZOOM_STEPS.length - 1}
+                    className="px-2 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50"
+                  >
+                    +
+                  </button>
+                </div>
+              )}
             </>
           )}
 
@@ -166,43 +280,103 @@ export function PdfReaderView() {
           )}
         </div>
 
-        {/* PDF render area */}
-        <div
-          className="flex-1 overflow-auto bg-gray-100 dark:bg-gray-900 p-4 flex justify-center pdf-word-layer"
-          onClick={handlePageContainerClick}
-        >
-          {!pdfUrl && (
-            <div className="text-center text-gray-500 dark:text-gray-400 py-12">
-              <p className="mb-2">No PDF loaded.</p>
-              <p className="text-sm">Click "Open PDF" to import a file. Click any word to parse it.</p>
-            </div>
-          )}
-
-          {pdfError && (
-            <div className="bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg p-4">
-              {pdfError}
-            </div>
-          )}
-
+        {/* Render area */}
+        <div className="flex-1 overflow-hidden flex">
+          {/* Single Document mount; Page is only shown when PDF pane is visible */}
           {pdfUrl && (
             <Document
               file={pdfUrl}
-              onLoadSuccess={({ numPages }) => {
-                setNumPages(numPages);
+              onLoadSuccess={(pdf) => {
+                pdfDocRef.current = pdf;
+                setNumPages(pdf.numPages);
                 setPdfError(null);
+                setPageNum((p) => p);
               }}
               onLoadError={(err) => setPdfError(err.message || 'Failed to load PDF')}
-              loading={
-                <div className="text-gray-500 dark:text-gray-400 py-8">Loading PDF…</div>
-              }
+              loading={null}
+              className={showPdf ? (showText ? 'w-1/2 border-r border-gray-200 dark:border-gray-700' : 'flex-1') : 'hidden'}
             >
-              <Page
-                pageNumber={pageNum}
-                scale={zoom}
-                customTextRenderer={customTextRenderer}
-                renderAnnotationLayer={false}
-              />
+              {showPdf && (
+                <div
+                  className="h-full overflow-auto bg-gray-100 dark:bg-gray-900 p-4 flex justify-center pdf-word-layer"
+                  onClick={handleWordClick}
+                >
+                  {pdfError && (
+                    <div className="bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg p-4">
+                      {pdfError}
+                    </div>
+                  )}
+                  <Page
+                    pageNumber={pageNum}
+                    scale={zoom}
+                    customTextRenderer={customTextRenderer}
+                    renderAnnotationLayer={false}
+                  />
+                </div>
+              )}
             </Document>
+          )}
+
+          {/* Empty state when no PDF and PDF pane would be visible */}
+          {!pdfUrl && showPdf && (
+            <div className={`${showText ? 'w-1/2 border-r border-gray-200 dark:border-gray-700' : 'flex-1'} flex items-center justify-center bg-gray-100 dark:bg-gray-900`}>
+              <div className="text-center text-gray-500 dark:text-gray-400 py-12">
+                <p className="mb-2">No PDF loaded.</p>
+                <p className="text-sm">Click "Open PDF" to import a file.</p>
+              </div>
+            </div>
+          )}
+
+          {/* Text pane */}
+          {showText && (
+            <div
+              className="flex-1 overflow-auto bg-white dark:bg-gray-800 p-4 pdf-word-layer"
+              onClick={handleWordClick}
+            >
+              {!pdfUrl && (
+                <div className="text-center text-gray-500 dark:text-gray-400 py-12">
+                  <p className="mb-2">No PDF loaded.</p>
+                  <p className="text-sm">Click "Open PDF" to import. Click a word to parse.</p>
+                </div>
+              )}
+
+              {pdfUrl && textLoading && lines.length === 0 && (
+                <div className="text-gray-500 dark:text-gray-400 py-4">Extracting text…</div>
+              )}
+
+              {pdfUrl && lines.length > 0 && (
+                <div className="max-w-4xl mx-auto">
+                  <div className="text-xs text-gray-400 dark:text-gray-500 mb-3 font-mono">
+                    Page {pageNum}
+                  </div>
+                  <div className="space-y-1">
+                    {lines.map((line, idx) => (
+                      <div
+                        key={idx}
+                        className="flex gap-3 items-start group"
+                      >
+                        <span className="text-xs text-gray-400 dark:text-gray-500 font-mono select-none w-8 shrink-0 text-right pt-1">
+                          {idx + 1}
+                        </span>
+                        <div
+                          dir={line.dir}
+                          className={`flex-1 leading-relaxed ${
+                            line.dir === 'rtl' ? 'font-syriac text-lg' : ''
+                          }`}
+                          dangerouslySetInnerHTML={{ __html: wrapWords(line.text) }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {pdfUrl && !textLoading && lines.length === 0 && (
+                <div className="text-gray-500 dark:text-gray-400 py-4">
+                  No extractable text on this page (image-only PDF?).
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>
@@ -214,7 +388,7 @@ export function PdfReaderView() {
             Parse
           </h3>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-            Click a word in the PDF, or edit and re-parse.
+            Click a word in the PDF or text view, or edit and re-parse.
           </p>
         </div>
         <div className="p-4 border-b border-gray-200 dark:border-gray-700">
