@@ -66,8 +66,8 @@ function groupIntoLines(items: TextItem[]): TextLine[] {
   return lines.map(({ y, items }) => {
     const rtlVotes = items.filter((i) => i.dir === 'rtl').length;
     const dir: 'ltr' | 'rtl' = rtlVotes > items.length / 2 ? 'rtl' : 'ltr';
-    // Sort by X. For RTL we still sort ascending X — the dir attr flips display order.
-    const ordered = [...items].sort((a, b) => a.x - b.x);
+    // Logical reading order: LTR = ascending X, RTL = descending X (rightmost first).
+    const ordered = [...items].sort((a, b) => (dir === 'rtl' ? b.x - a.x : a.x - b.x));
     const text = ordered
       .map((i) => i.str)
       .join(' ')
