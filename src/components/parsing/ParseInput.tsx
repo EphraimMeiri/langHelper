@@ -1,91 +1,33 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { ScriptInput } from '../common/ScriptInput';
 import { useParsingStore } from '../../stores/parsingStore';
 import { useLanguageStore } from '../../stores/languageStore';
-import { useTableStore } from '../../stores/tableStore';
-import { parseForm } from '../../utils/parsing/parseEngine';
-import { generateRulesFromTables } from '../../utils/parsing/ruleGenerator';
-import { getBuiltinRulesForLanguage } from '../../utils/parsing/builtinRules';
+import { useParseAction } from '../../hooks/useParseAction';
 
-export function ParseInput() {
-  const [inputValue, setInputValue] = useState('');
+interface ParseInputProps {
+  value?: string;
+  onValueChange?: (v: string) => void;
+}
+
+export function ParseInput({ value: controlledValue, onValueChange }: ParseInputProps = {}) {
+  const [localValue, setLocalValue] = useState('');
+  const isControlled = controlledValue !== undefined;
+  const inputValue = isControlled ? controlledValue! : localValue;
+  const setInputValue = (v: string) => {
+    if (isControlled) onValueChange?.(v);
+    else setLocalValue(v);
+  };
+
   const { getCurrentLanguage } = useLanguageStore();
-  const { tables } = useTableStore();
-  const {
-    setInput,
-    setResult,
-    setLoading,
-    setError,
-    isLoading,
-    useSedra,
-    useLocalTables,
-    getRuleSet,
-    setRuleSet,
-    addToHistory,
-    history,
-  } = useParsingStore();
+  const { isLoading, history } = useParsingStore();
+  const runParse = useParseAction();
 
   const currentLang = getCurrentLanguage();
 
-  const handleParse = useCallback(async () => {
+  const handleParse = () => {
     if (!inputValue.trim()) return;
-
-    setInput(inputValue);
-    setLoading(true);
-    setError(null);
-
-    try {
-      // Get or generate rule set
-      let ruleSet = currentLang ? getRuleSet(currentLang.id) : null;
-
-      // Generate rules from tables if not available
-      if (!ruleSet && currentLang && tables.length > 0) {
-        const languageTables = tables.filter(t => t.languageId === currentLang.id);
-        if (languageTables.length > 0) {
-          ruleSet = generateRulesFromTables(languageTables, currentLang.id);
-          setRuleSet(currentLang.id, ruleSet);
-        }
-      }
-
-      // Fall back to built-in rules if no custom rules
-      if (!ruleSet && currentLang) {
-        ruleSet = getBuiltinRulesForLanguage(currentLang.id);
-      }
-
-      // Filter tables for current language
-      const languageTables = currentLang
-        ? tables.filter(t => t.languageId === currentLang.id)
-        : tables;
-
-      // Parse the form
-      const result = await parseForm(inputValue, ruleSet, languageTables, {
-        useSedra,
-        useLocalTables,
-      });
-
-      setResult(result);
-      addToHistory(inputValue, result.success);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Parse failed';
-      setError(message);
-      addToHistory(inputValue, false);
-    } finally {
-      setLoading(false);
-    }
-  }, [
-    inputValue,
-    currentLang,
-    tables,
-    useSedra,
-    useLocalTables,
-    getRuleSet,
-    setRuleSet,
-    setInput,
-    setResult,
-    setLoading,
-    setError,
-    addToHistory,
-  ]);
+    runParse(inputValue);
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {

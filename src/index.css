@@ -173,3 +173,12 @@ input[type="radio"] {
 .cal-lexicon-content td, .cal-lexicon-content th {
   @apply px-2 py-1;
 }
+
+/* PDF reader: word-level click targets inside the text layer */
+.pdf-word-layer .react-pdf__Page__textContent .pdf-word {
+  cursor: pointer;
+  border-radius: 2px;
+}
+.pdf-word-layer .react-pdf__Page__textContent .pdf-word:hover {
+  background-color: rgba(59, 130, 246, 0.35);
+}

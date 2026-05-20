@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Header } from '../components/layout/Header';
+import { PdfReaderView } from '../components/reader/PdfReaderView';
 import { useCALReaderStore } from '../stores/calReaderStore';
 import { useSettingsStore, getFontSizeClass } from '../stores/settingsStore';
 import { CAL_TEXTS, searchTexts, findText, getTextsByGroup } from '../utils/calTextCatalog';
@@ -37,6 +38,7 @@ export function ReaderPage() {
   const fontSize = useSettingsStore((s) => s.fontSize);
   const fontClass = getFontSizeClass(fontSize);
 
+  const [mode, setMode] = useState<'cal' | 'pdf'>('cal');
   const [chapterInput, setChapterInput] = useState(String(chapterNum));
   const [lexiconHTML, setLexiconHTML] = useState<string | null>(null);
   const [lexiconLoading, setLexiconLoading] = useState(false);
@@ -125,12 +127,43 @@ export function ReaderPage() {
       <Header
         title="Reader"
         subtitle={
-          chapter
-            ? `${currentTextInfo?.name || `Text ${fileCode}`} — Chapter ${chapterNum}`
-            : 'CAL Text Reader'
+          mode === 'pdf'
+            ? 'PDF Reader — click a word to parse'
+            : chapter
+              ? `${currentTextInfo?.name || `Text ${fileCode}`} — Chapter ${chapterNum}`
+              : 'CAL Text Reader'
         }
       />
 
+      {/* Mode tabs */}
+      <div className="border-b border-gray-200 dark:border-gray-700 px-6">
+        <div className="flex gap-1">
+          <button
+            onClick={() => setMode('cal')}
+            className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
+              mode === 'cal'
+                ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+            }`}
+          >
+            CAL Texts
+          </button>
+          <button
+            onClick={() => setMode('pdf')}
+            className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
+              mode === 'pdf'
+                ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+            }`}
+          >
+            PDF
+          </button>
+        </div>
+      </div>
+
+      {mode === 'pdf' && <PdfReaderView />}
+
+      {mode === 'cal' && (<>
       {/* Controls bar */}
       <div className="border-b border-gray-200 dark:border-gray-700 px-6 py-3 flex flex-wrap items-center gap-3">
         {/* Searchable text picker */}
@@ -390,6 +423,7 @@ export function ReaderPage() {
           <CacheInfo />
         </div>
       </div>
+      </>)}
     </div>
   );
 }
