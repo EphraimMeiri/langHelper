@@ -91,7 +91,8 @@ export function PdfReaderView() {
   const [lines, setLines] = useState<TextLine[]>([]);
   const [textLoading, setTextLoading] = useState(false);
 
-  const pdfDocRef = useRef<{ getPage: (n: number) => Promise<{ getTextContent: () => Promise<{ items: unknown[] }> }>; numPages: number } | null>(null);
+  type PdfProxy = { getPage: (n: number) => Promise<{ getTextContent: () => Promise<{ items: unknown[] }> }>; numPages: number };
+  const [pdfDoc, setPdfDoc] = useState<PdfProxy | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const runParse = useParseAction();
   const isLoadingParse = useParsingStore((s) => s.isLoading);
@@ -110,14 +111,14 @@ export function PdfReaderView() {
     setPageNum(1);
     setPdfError(null);
     setLines([]);
-    pdfDocRef.current = null;
+    setPdfDoc(null);
     e.target.value = '';
   };
 
   // Extract text for the active page whenever it (or the doc) changes.
   useEffect(() => {
     let cancelled = false;
-    const pdf = pdfDocRef.current;
+    const pdf = pdfDoc;
     if (!pdf) return;
     setTextLoading(true);
     (async () => {
@@ -152,7 +153,7 @@ export function PdfReaderView() {
     return () => {
       cancelled = true;
     };
-  }, [pageNum, pdfUrl]);
+  }, [pageNum, pdfDoc]);
 
   const handleWordClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -287,10 +288,9 @@ export function PdfReaderView() {
             <Document
               file={pdfUrl}
               onLoadSuccess={(pdf) => {
-                pdfDocRef.current = pdf;
+                setPdfDoc(pdf as unknown as PdfProxy);
                 setNumPages(pdf.numPages);
                 setPdfError(null);
-                setPageNum((p) => p);
               }}
               onLoadError={(err) => setPdfError(err.message || 'Failed to load PDF')}
               loading={null}
