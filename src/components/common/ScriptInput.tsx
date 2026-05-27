@@ -4,7 +4,7 @@ import { TransliterationHelp } from './TransliterationHelp.tsx';
 import { transliterateWithMappings } from '../../utils/transliteration.ts';
 import { useTransliterationStore } from '../../stores/transliterationStore.ts';
 import { isHebrewScript, hebrewToCAL, calToSyriac, hebrewNikudToSyriac } from '../../utils/calTransliteration.ts';
-import { convertSyriacVowelStyle } from '../../utils/syriacText.ts';
+import { convertSyriacVowelStyle, joinSeparatedSyriacDiacritics } from '../../utils/syriacText.ts';
 import { useSettingsStore } from '../../stores/settingsStore.ts';
 import type { ScriptType, TextDirection } from '../../types/language.ts';
 
@@ -172,6 +172,28 @@ export function ScriptInput({
     lastValueRef.current = newValue;
   };
 
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (script !== 'syriac') return;
+    const pasted = e.clipboardData.getData('text');
+    const fixed = joinSeparatedSyriacDiacritics(pasted);
+    // Nothing to repair — let the browser handle the paste normally.
+    if (fixed === pasted) return;
+
+    e.preventDefault();
+    const target = e.target as HTMLInputElement | HTMLTextAreaElement;
+    const start = target.selectionStart ?? value.length;
+    const end = target.selectionEnd ?? value.length;
+    const newValue = value.slice(0, start) + fixed + value.slice(end);
+    const newPos = start + fixed.length;
+
+    onChange(newValue);
+    setCursorPosition(newPos);
+    lastValueRef.current = newValue;
+    requestAnimationFrame(() => {
+      inputRef.current?.setSelectionRange(newPos, newPos);
+    });
+  };
+
   const handleSelect = (e: React.SyntheticEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const target = e.target as HTMLInputElement | HTMLTextAreaElement;
     setCursorPosition(target.selectionStart || 0);
@@ -195,6 +217,7 @@ export function ScriptInput({
           value={value}
           onChange={handleInputChange}
           onSelect={handleSelect}
+          onPaste={handlePaste}
           onKeyDown={onKeyDown}
           dir={direction}
           className={inputClassName}
@@ -208,6 +231,7 @@ export function ScriptInput({
           value={value}
           onChange={handleInputChange}
           onSelect={handleSelect}
+          onPaste={handlePaste}
           onKeyDown={onKeyDown}
           dir={direction}
           className={inputClassName}

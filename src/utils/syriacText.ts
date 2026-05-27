@@ -25,6 +25,16 @@ export function stripSyriacVowels(text: string): string {
   return text.replace(/[\u0730-\u074A]/g, '');
 }
 
+/**
+ * Text copied out of some PDFs inserts spaces between base letters and their
+ * combining vowel/diacritic marks. Remove any whitespace (including NBSP, the
+ * Unicode space separators, and zero-width/BOM) that immediately precedes a
+ * Syriac combining mark (U+0730\u2013U+074A) so it reattaches to the prior letter.
+ */
+export function joinSeparatedSyriacDiacritics(text: string): string {
+  return text.replace(/[ \t\u00A0\u2000-\u200B\uFEFF]+([\u0730-\u074A])/g, '$1');
+}
+
 export function convertSyriacVowelStyle(
   text: string,
   targetStyle: SyriacVowelStyle
