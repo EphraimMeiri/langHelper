@@ -35,6 +35,29 @@ export function joinSeparatedSyriacDiacritics(text: string): string {
   return text.replace(/[ \t\u00A0\u2000-\u200B\uFEFF]+([\u0730-\u074A])/g, '$1');
 }
 
+/**
+ * Remove whitespace sitting between two Syriac characters (block U+0700\u2013U+074F).
+ * The lookahead keeps the trailing letter unconsumed so runs of single-letter
+ * gaps ("\u0710 \u0712 \u0713") all collapse.
+ */
+export function closeSyriacLetterGaps(text: string): string {
+  return text.replace(
+    /([\u0700-\u074F])[ \t\u00A0\u2000-\u200B\uFEFF]+(?=[\u0700-\u074F])/g,
+    '$1'
+  );
+}
+
+/**
+ * Repair Syriac text pasted from a PDF. First reattach combining marks to their
+ * letters; only if that changed something (i.e. the copy was broken) do we also
+ * close gaps between letters, since a clean paste's spaces are real boundaries.
+ */
+export function repairPastedSyriac(text: string): string {
+  const joined = joinSeparatedSyriacDiacritics(text);
+  if (joined === text) return text;
+  return closeSyriacLetterGaps(joined);
+}
+
 export function convertSyriacVowelStyle(
   text: string,
   targetStyle: SyriacVowelStyle

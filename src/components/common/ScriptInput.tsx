@@ -4,7 +4,7 @@ import { TransliterationHelp } from './TransliterationHelp.tsx';
 import { transliterateWithMappings } from '../../utils/transliteration.ts';
 import { useTransliterationStore } from '../../stores/transliterationStore.ts';
 import { isHebrewScript, hebrewToCAL, calToSyriac, hebrewNikudToSyriac } from '../../utils/calTransliteration.ts';
-import { convertSyriacVowelStyle, joinSeparatedSyriacDiacritics } from '../../utils/syriacText.ts';
+import { convertSyriacVowelStyle, repairPastedSyriac } from '../../utils/syriacText.ts';
 import { useSettingsStore } from '../../stores/settingsStore.ts';
 import type { ScriptType, TextDirection } from '../../types/language.ts';
 
@@ -175,7 +175,7 @@ export function ScriptInput({
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (script !== 'syriac') return;
     const pasted = e.clipboardData.getData('text');
-    const fixed = joinSeparatedSyriacDiacritics(pasted);
+    const fixed = repairPastedSyriac(pasted);
     // Nothing to repair — let the browser handle the paste normally.
     if (fixed === pasted) return;
 
